@@ -6,28 +6,28 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
+        __is_deleted as is_deleted,
 
-        v:id::string                                                  as record_guid,
+        {{ jget("v:id::string") }}                                                  as record_guid,
         ods_version,
         data_model_version,
-        v:surveyQuestionReference:namespace::string                   as namespace,
-        v:surveyQuestionReference:surveyIdentifier::string            as survey_id,
-        v:surveyQuestionReference:questionCode::string                as question_code,
-        v:surveyResponseReference:surveyResponseIdentifier::string    as survey_response_id,
-        v:comment::string                                             as comment,
-        v:noResponse::boolean                                         as no_response,
+        {{ jget("v:surveyQuestionReference:namespace::string") }}                   as namespace,
+        {{ jget("v:surveyQuestionReference:surveyIdentifier::string") }}            as survey_id,
+        {{ jget("v:surveyQuestionReference:questionCode::string") }}                as question_code,
+        {{ jget("v:surveyResponseReference:surveyResponseIdentifier::string") }}    as survey_response_id,
+        {{ jget("v:comment::string") }}                                             as comment,
+        {{ jget("v:noResponse::boolean") }}                                         as no_response,
         --references
-        v:surveyQuestionReference   as survey_question_reference,
-        v:surveyResponseReference   as survey_response_reference,
+        {{ jget("v:surveyQuestionReference") }}   as survey_question_reference,
+        {{ jget("v:surveyResponseReference") }}   as survey_response_reference,
         -- lists
-        v:surveyQuestionMatrixElementResponses  as v_survey_question_matrix_element_responses,
-        v:values                                as v_values,
+        {{ jget("v:surveyQuestionMatrixElementResponses") }}  as v_survey_question_matrix_element_responses,
+        {{ jget("v:values") }}                                as v_values,
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
     from survey_question_responses
 )
 select * from renamed

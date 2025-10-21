@@ -6,41 +6,41 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
-        v:id::string                      as record_guid,
+        __is_deleted as is_deleted,
+        {{ jget('v:id::string') }}                      as record_guid,
         ods_version,
         data_model_version,
-        v:localEducationAgencyId::int     as lea_id,
-        v:nameOfInstitution::string       as lea_name,
-        v:shortNameOfInstitution::string  as lea_short_name,
-        v:webSite::string                 as website,
+        {{ jget('v:localEducationAgencyId::int') }}     as lea_id,
+        {{ jget('v:nameOfInstitution::string') }}       as lea_name,
+        {{ jget('v:shortNameOfInstitution::string') }}  as lea_short_name,
+        {{ jget('v:webSite::string') }}                 as website,
         -- reference ids
-        v:parentLocalEducationAgencyReference:localEducationAgencyId::int as parent_lea_id,
-        v:educationServiceCenterReference:educationServiceCenterId::int   as esc_id,
-        v:stateEducationAgencyReference:stateEducationAgencyId::int       as sea_id,
+        {{ jget('v:parentLocalEducationAgencyReference:localEducationAgencyId::int') }} as parent_lea_id,
+        {{ jget('v:educationServiceCenterReference:educationServiceCenterId::int') }}   as esc_id,
+        {{ jget('v:stateEducationAgencyReference:stateEducationAgencyId::int') }}       as sea_id,
         -- descriptors
         {{ extract_descriptor('v:operationalStatusDescriptor::string') }}            as operational_status,
         {{ extract_descriptor('v:charterStatusDescriptor::string') }}                as charter_status,
         {{ extract_descriptor('v:localEducationAgencyCategoryDescriptor::string') }} as lea_category,
         --references
-        v:parentLocalEducationAgencyReference as parent_local_education_agency_reference,
-        v:stateEducationAgencyReference       as state_education_agency_reference,
-        v:educationServiceCenterReference     as education_service_center_reference,
+        {{ jget('v:parentLocalEducationAgencyReference') }} as parent_local_education_agency_reference,
+        {{ jget('v:stateEducationAgencyReference') }}       as state_education_agency_reference,
+        {{ jget('v:educationServiceCenterReference') }}     as education_service_center_reference,
         -- unflattened lists
-        v:accountabilities       as v_accountabilities,
-        v:addresses              as v_addresses,
-        v:categories             as v_categories,
-        v:federalFunds           as v_federal_funds,
-        v:identificationCodes    as v_identification_codes,
-        v:indicators             as v_indicators,
-        v:institutionTelephones  as v_institution_telephones,
-        v:internationalAddresses as v_international_addresses,
+        {{ jget('v:accountabilities') }}       as v_accountabilities,
+        {{ jget('v:addresses') }}              as v_addresses,
+        {{ jget('v:categories') }}             as v_categories,
+        {{ jget('v:federalFunds') }}           as v_federal_funds,
+        {{ jget('v:identificationCodes') }}    as v_identification_codes,
+        {{ jget('v:indicators') }}             as v_indicators,
+        {{ jget('v:institutionTelephones') }}  as v_institution_telephones,
+        {{ jget('v:internationalAddresses') }} as v_international_addresses,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget('v:_ext') }} as v_ext
     from leas
 )
 select * from renamed

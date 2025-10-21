@@ -6,28 +6,28 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
-        v:id::string                                  as record_guid,
+        __is_deleted as is_deleted,
+        {{ jget("v:id::string") }}                                  as record_guid,
         ods_version,
         data_model_version,
-        v:schoolReference:schoolId::integer           as school_id,
-        v:schoolYearTypeReference:schoolYear::integer as school_year,
-        v:beginDate::date                             as session_begin_date,
-        v:endDate::date                               as session_end_date,
-        v:sessionName::string                         as session_name,
-        v:totalInstructionalDays::float               as total_instructional_days,
+        {{ jget("v:schoolReference:schoolId::integer") }}           as school_id,
+        {{ jget("v:schoolYearTypeReference:schoolYear::integer") }} as school_year,
+        {{ jget("v:beginDate::date") }}                             as session_begin_date,
+        {{ jget("v:endDate::date") }}                               as session_end_date,
+        {{ jget("v:sessionName::string") }}                         as session_name,
+        {{ jget("v:totalInstructionalDays::float") }}               as total_instructional_days,
         {{ extract_descriptor('v:termDescriptor::string') }} as academic_term,
         -- references
-        v:schoolReference as school_reference,
+        {{ jget("v:schoolReference") }} as school_reference,
         -- lists
-        v:academicWeeks as v_academic_weeks,
-        v:gradingPeriods as v_grading_periods,
+        {{ jget("v:academicWeeks") }} as v_academic_weeks,
+        {{ jget("v:gradingPeriods") }} as v_grading_periods,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
     from sessions
 )
 select * from renamed

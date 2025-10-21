@@ -12,7 +12,8 @@
     {{ edu_edfi_source.extract_extension_list(model_name) }}
 {% else %}
   {# if `model_name` IS a singleton, use var of its single model name #}
-  {%- set extensions =  var('extensions')[model_name]  -%}
+  {%- set ext_map = var('extensions', {}) -%}
+  {%- set extensions = ext_map.get(model_name) if ext_map is mapping else {} -%}
 
   {%- if extensions is defined and extensions|length > 0 -%},{% endif -%}
 
@@ -27,16 +28,18 @@
       {%- set ext_extract_descriptor =  extensions[ext].extract_descriptor  -%}
 
       {%- if ext_extract_descriptor %}
-        {{extract_descriptor(full_ext_native_name + '::string')}}::{{ext_dtype}} as {{ext}}
+        {# Descriptor values are strings; use extract_descriptor which is SQL Server-aware and internally uses jget #}
+        {{ extract_descriptor(full_ext_native_name + '::string') }} as {{ ext }}
       {%- else -%}
-        {{full_ext_native_name}}::{{ext_dtype}} as {{ext}}
+        {# Use jget to extract and type-cast the extension value for SQL Server #}
+        {{ jget(full_ext_native_name + '::' + ext_dtype) }} as {{ ext }}
       {%- endif %}    
 
     {%- else %}
       {{ext}}
     {%- endif %}
 
-    {%- if not loop.last %},{% endif -%}
+  {%- if not loop.last %},{% endif -%}
 
   {%- endfor -%}
 

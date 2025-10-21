@@ -361,19 +361,19 @@
 
     {# handle cases where skey is different depending on the data standard version (need a case when to apply different rules by row) #}
     {% if skey_def['diff_by_data_standard'] %}
-        (case
+        cast((case
           when {{ skey_ref }} is null then null
         {% for ds_version in skey_def['ds_specific_col_lists'] %}
             when data_model_version {{ ds_version }}
                 then {{ dbt_utils.generate_surrogate_key(edu_edfi_source.gen_key_list(skey_def, skey_ref, skey_def['ds_specific_col_lists'][ds_version], extras=extras)) }} 
         {% endfor %}
-        end)::varchar(32) as {{ alt_k_name or k_name }}
+        end) as varchar(32)) as {{ alt_k_name or k_name }}
     {% else %}
-        iff(
-            {{ skey_ref }} is not null, 
-            {{ dbt_utils.generate_surrogate_key(edu_edfi_source.gen_key_list(skey_def, skey_ref, skey_vars, extras=extras)) }}, 
-            null
-        )::varchar(32) as {{ alt_k_name or k_name }}
+        cast((case
+            when {{ skey_ref }} is not null then 
+                {{ dbt_utils.generate_surrogate_key(edu_edfi_source.gen_key_list(skey_def, skey_ref, skey_vars, extras=extras)) }}
+            else null
+        end) as varchar(32)) as {{ alt_k_name or k_name }}
     {% endif %}
 {%- endmacro -%}
 
@@ -397,25 +397,25 @@
     {% endif %}
 
     {#- loop over key vars, concattenating reference name and var name -#}
-    {% for skey_var in skey_vars %}
-      {% set concatted_keys = skey_ref + ':' + skey_var %}
+        {% for skey_var in skey_vars %}
+            {% set concatted_keys = skey_ref + ':' + skey_var %}
 
-      {#- hack: if key contains Date, coerce to drop timestamp info -#}
+            {#- hack: if key contains Date, coerce to drop timestamp info -#}
       {% if 'Date' in skey_var %}
         {%- set concatted_keys = concatted_keys + '::string::date' %}
-      {% endif %}
+            {% endif %}
 
-      {#- hack: if key contains Descriptor, parse value out -#}
-      {% if 'Descriptor' in skey_var or 'descriptor' in skey_var %}
-        {%- set concatted_keys = edu_edfi_source.extract_descriptor(concatted_keys,descriptor_name=skey_var) %}
-      {% endif %}
+            {#- hack: if key contains Descriptor, parse value out -#}
+            {% if 'Descriptor' in skey_var or 'descriptor' in skey_var %}
+                {%- set concatted_keys = edu_edfi_source.extract_descriptor(concatted_keys,descriptor_name=skey_var) %}
+            {% endif %}
 
-      {#- hack: wrap in lower to deal with case insensitive collations -#}
-      {% set concatted_keys = 'lower(' + concatted_keys + ')' %}
-     
-      {#- grow the output object with the new key -#}
-      {% do output.append(concatted_keys) %}
-    {% endfor %}
+            {#- hack: wrap in lower to deal with case insensitive collations -#}
+            {% set concatted_keys = 'lower(' + concatted_keys + ')' %}
+
+            {#- grow the output object with the new key -#}
+            {% do output.append(concatted_keys) %}
+        {% endfor %}
 
     {{ return(output) }}
   

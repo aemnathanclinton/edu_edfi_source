@@ -6,26 +6,26 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
-        v:id::string                                       as record_guid,
+        __is_deleted as is_deleted,
+        {{ jget("v:id::string") }}                                       as record_guid,
         ods_version,
         data_model_version,
-        v:studentReference:studentUniqueId::string         as student_unique_id,
-        v:cohortReference:educationOrganizationId::integer as cohort_ed_org_id,
-        v:cohortReference:cohortIdentifier::string         as cohort_id,
-        v:beginDate::date                                  as cohort_begin_date,
-        v:endDate::date                                    as cohort_end_date,
+        {{ jget("v:studentReference:studentUniqueId::string") }}         as student_unique_id,
+        {{ jget("v:cohortReference:educationOrganizationId::integer") }} as cohort_ed_org_id,
+        {{ jget("v:cohortReference:cohortIdentifier::string") }}         as cohort_id,
+        {{ jget("v:beginDate::date") }}                                  as cohort_begin_date,
+        {{ jget("v:endDate::date") }}                                    as cohort_end_date,
         -- references
-        v:studentReference as student_reference,
-        v:cohortReference  as cohort_reference,
+        {{ jget("v:studentReference") }} as student_reference,
+        {{ jget("v:cohortReference") }}  as cohort_reference,
         -- lists 
-        v:sections as v_sections,
+        {{ jget("v:sections") }} as v_sections,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
 
     from stu_cohort_assoc
 )

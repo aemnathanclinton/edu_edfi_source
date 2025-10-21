@@ -22,5 +22,5 @@ deduped as (
     }}
 )
 select * from deduped
-where not is_deleted
+where is_deleted = 0
 order by tenant_code, api_year desc, descriptor_name, code_value

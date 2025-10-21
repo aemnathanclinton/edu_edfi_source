@@ -27,6 +27,21 @@ Notes:
     {{ return(adapter.dispatch('json_object_construct', 'edu_edfi_source')(paired_list, is_terminal)) }}
 {% endmacro %}
 
+{% macro sqlserver__json_object_construct(paired_list, is_terminal) -%}
+    -- Construct a JSON object using SQL Server's JSON serializer so values are properly quoted/escaped
+    (
+        select
+        {%- for item in paired_list %}
+            {{ item[1] }} as [{{ item[0] }}]{% if not loop.last %}, {% endif %}
+        {%- endfor %}
+        for json path, without_array_wrapper, include_null_values
+    )
+{%- endmacro %}
+{% macro default__json_object_construct(paired_list, is_terminal) -%}
+    cast('{}' as nvarchar(max))
+{%- endmacro %}
+
+
 {% macro snowflake__json_object_construct(paired_list, is_terminal) -%}
     object_construct(
         {%- for item in paired_list %}

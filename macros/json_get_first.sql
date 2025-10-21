@@ -16,6 +16,13 @@ Arguments:
     {{ return(adapter.dispatch('json_get_first', 'edu_edfi_source')(column, type)) }}
 {% endmacro %}
 
+{% macro sqlserver__json_get_first(column, type) -%}
+    (select top 1 try_cast([value] as {{ type }}) from openjson({{ column }}))
+{%- endmacro %}
+{% macro default__json_get_first(column, type) -%}
+    null
+{%- endmacro %}
+
 {% macro snowflake__json_get_first(column, type) -%}
     {{ column }}[0]::{{ type }}
 {%- endmacro %}

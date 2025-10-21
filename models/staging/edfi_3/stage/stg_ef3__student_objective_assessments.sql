@@ -29,20 +29,44 @@ flattened as (
         reason_not_tested,
         retest_indicator,
         when_assessed_grade_level,
-        value:objectiveAssessmentReference:identificationCode::string as objective_assessment_identification_code,
-        value:objectiveAssessmentReference as objective_assessment_reference,
+        {{ jget('value:objectiveAssessmentReference:identificationCode::string') }} as objective_assessment_identification_code,
+        {{ jget('value:objectiveAssessmentReference') }} as objective_assessment_reference,
         -- unflattened lists
-        value:performanceLevels as v_performance_levels,
-        value:scoreResults as v_score_results
+        {{ jget('value:performanceLevels') }} as v_performance_levels,
+        {{ jget('value:scoreResults') }} as v_score_results
     from stage_student_assessments
         {{ json_flatten('v_student_objective_assessments') }}
 ),
 -- join to get subject from stg obj assess (if not null)
 joined as (
     select
-      {{ star('flattened', except=['academic_subject']) }},
-      coalesce(stage_obj_assessments.academic_subject, flattened.academic_subject) as academic_subject,
-      stage_obj_assessments.assess_academic_subject
+      flattened.tenant_code,
+      flattened.api_year,
+      flattened.pull_timestamp,
+      flattened.last_modified_timestamp,
+      flattened.k_student_assessment,
+      flattened.k_assessment,
+      flattened.k_student,
+      flattened.k_student_xyear,
+      flattened.student_assessment_identifier,
+      flattened.assessment_identifier,
+      flattened.namespace,
+      flattened.school_year,
+      flattened.administration_date,
+      flattened.administration_end_date,
+      flattened.event_description,
+      flattened.administration_environment,
+      flattened.administration_language,
+      flattened.event_circumstance,
+      flattened.platform_type,
+      flattened.reason_not_tested,
+      flattened.retest_indicator,
+      flattened.when_assessed_grade_level,
+      flattened.objective_assessment_identification_code,
+      flattened.objective_assessment_reference,
+      flattened.v_performance_levels,
+      flattened.v_score_results,
+      coalesce(stage_obj_assessments.academic_subject, flattened.academic_subject) as academic_subject
     from flattened
     join stage_obj_assessments
       on flattened.tenant_code = stage_obj_assessments.tenant_code
@@ -54,7 +78,7 @@ joined as (
 {# TEMPORARY Rename academic_subject --> obj_assess_academic_subject & overall --> academic_subject to allow the gen_skey() call to behave consistent with stg_ef3__objective_assessments #}
 renamed1 as (
     select 
-        {{ edu_edfi_source.star('joined', rename=[['academic_subject', 'obj_assess_academic_subject'], ['assess_academic_subject', 'academic_subject']]) }}
+        joined.*
     from joined
 ),
 keyed as (
@@ -72,7 +96,7 @@ keyed as (
             'lower(objective_assessment_identification_code)',
             'lower(student_assessment_identifier)']
         ) }} as k_student_objective_assessment,
-        {{ gen_skey('k_objective_assessment', extras = ['academic_subject', 'obj_assess_academic_subject']) }},
+        {{ gen_skey('k_objective_assessment', extras = ['academic_subject']) }},
         k_student_assessment,
         k_assessment,
         k_student,
@@ -81,7 +105,6 @@ keyed as (
         assessment_identifier,
         namespace,
         academic_subject,
-        obj_assess_academic_subject,
         objective_assessment_identification_code,
         objective_assessment_reference,
         school_year,
@@ -99,10 +122,10 @@ keyed as (
         v_score_results
     from renamed1
 ),
-{# Rename BACK obj_assess_academic_subject --> academic_subject for human-readability and to avoid breaking change to warehouse. academic_subject above represents 'OVERALL' assessment subject, so that the gen_skey() call works. #}
+{# Rename BACK for human-readability and to avoid breaking change to warehouse. #}
 renamed2 as (
     select 
-        {{ edu_edfi_source.star('keyed', rename=[['academic_subject', 'assess_academic_subject'], ['obj_assess_academic_subject', 'academic_subject']]) }}
+        keyed.*
     from keyed
 ),
 -- todo: we already dedupe in student assessments so this is actually only necessary if we think there

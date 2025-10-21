@@ -13,7 +13,7 @@ distinct_obj_subject as (
         assessment_identifier,
         namespace,
         academic_subject,
-        value:objectiveAssessmentReference:identificationCode::string as objective_assessment_identification_code
+        {{ jget('value:objectiveAssessmentReference:identificationCode::string') }} as objective_assessment_identification_code
     from stage_student_assessments
         {{ json_flatten('v_student_objective_assessments') }}
 ),
@@ -66,4 +66,4 @@ renamed as (
   from deduped
 )
 select * from renamed
-where not is_deleted
+where is_deleted = 0

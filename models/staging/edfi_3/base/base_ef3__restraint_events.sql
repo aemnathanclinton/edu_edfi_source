@@ -6,28 +6,28 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         filename,
         file_row_number,
-        is_deleted,
-        v:id::string                                         as record_guid,
+        __is_deleted as is_deleted,
+        {{ jget("v:id::string") }}                                         as record_guid,
         ods_version,
         data_model_version,
-        v:schoolReference:schoolId::integer                  as school_id,
-        v:studentReference:studentUniqueId::string           as student_unique_id,
-        v:restraintEventIdentifier::string                   as restraint_event_identifier,
-        v:eventDate::date                                    as event_date,
+        {{ jget("v:schoolReference:schoolId::integer") }}                  as school_id,
+        {{ jget("v:studentReference:studentUniqueId::string") }}           as student_unique_id,
+        {{ jget("v:restraintEventIdentifier::string") }}                   as restraint_event_identifier,
+        {{ jget("v:eventDate::date") }}                                    as event_date,
         -- descriptors
         {{ extract_descriptor('v:educationalEnvironmentDescriptor::string') }}   as educational_environment,
         -- references
-        v:schoolReference  as school_reference,
-        v:studentReference as student_reference,
+        {{ jget("v:schoolReference") }}  as school_reference,
+        {{ jget("v:studentReference") }} as student_reference,
         -- lists
-        v:programs         as v_programs,
-        v:reasons          as v_reasons,
+        {{ jget("v:programs") }}         as v_programs,
+        {{ jget("v:reasons") }}          as v_reasons,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
     from restraint_events
 )
 select * from renamed

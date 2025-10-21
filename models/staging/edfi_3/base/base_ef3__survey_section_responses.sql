@@ -6,22 +6,22 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
+        __is_deleted as is_deleted,
 
-        v:id::string as record_guid,
+        {{ jget("v:id::string") }} as record_guid,
         -- identity components
-        v:surveyResponseReference:namespace::string                as namespace,
-        v:surveySectionReference:surveyIdentifier::string          as survey_id,
-        v:surveyResponseReference:surveyResponseIdentifier::string as survey_response_id,
-        v:surveySectionReference:surveySectionTitle::string        as survey_section_title,
+        {{ jget("v:surveyResponseReference:namespace::string") }}                as namespace,
+        {{ jget("v:surveySectionReference:surveyIdentifier::string") }}          as survey_id,
+        {{ jget("v:surveyResponseReference:surveyResponseIdentifier::string") }} as survey_response_id,
+        {{ jget("v:surveySectionReference:surveySectionTitle::string") }}        as survey_section_title,
         -- non-identity components
-        v:sectionRating::float as section_rating,
+        {{ jget("v:sectionRating::float") }} as section_rating,
         -- references
-        v:surveyResponseReference as survey_response_reference,
-        v:surveySectionReference  as survey_section_reference
+        {{ jget("v:surveyResponseReference") }} as survey_response_reference,
+        {{ jget("v:surveySectionReference") }}  as survey_section_reference
     from survey_section_responses
 )
 select * from renamed

@@ -7,11 +7,11 @@ flattened as (
         api_year,
         k_student_academic_record,
         {{ extract_descriptor('value:gradePointAverageTypeDescriptor::string') }} as gpa_type,
-        value:gradePointAverageValue::float as gpa_value,
-        value:isCumulative::boolean as is_cumulative,
-        value:maxGradePointAverageValue::float  as max_gpa_value,
+        {{ jget('value:gradePointAverageValue::float') }} as gpa_value,
+        {{ jget('value:isCumulative::boolean') }} as is_cumulative,
+        {{ jget('value:maxGradePointAverageValue::float') }}  as max_gpa_value,
         -- edfi extensions
-        value:_ext as v_ext 
+        {{ jget('value:_ext') }} as v_ext 
     from stg_academic_records
         {{ json_flatten('v_grade_point_averages') }}
 ),

@@ -6,29 +6,29 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
+        __is_deleted as is_deleted,
 
-        v:id::string                                                  as record_guid,
+        {{ jget("v:id::string") }}                                                  as record_guid,
         ods_version,
         data_model_version,
-        v:surveyReference:surveyIdentifier::string                    as survey_id,
-        v:surveyReference:namespace::string                           as namespace,
-        v:surveySectionReference:surveySectionTitle::string           as survey_section_title,
-        v:questionCode::string                                        as question_code,
-        v:questionText::string                                        as question_text,
+        {{ jget("v:surveyReference:surveyIdentifier::string") }}                    as survey_id,
+        {{ jget("v:surveyReference:namespace::string") }}                           as namespace,
+        {{ jget("v:surveySectionReference:surveySectionTitle::string") }}           as survey_section_title,
+        {{ jget("v:questionCode::string") }}                                        as question_code,
+        {{ jget("v:questionText::string") }}                                        as question_text,
         -- descriptors
         {{ extract_descriptor('v:questionFormDescriptor::string') }} as question_form,
         --references
-        v:surveyReference          as survey_reference,
-        v:surveySectionReference   as survey_section_reference,
+        {{ jget("v:surveyReference") }}          as survey_reference,
+        {{ jget("v:surveySectionReference") }}   as survey_section_reference,
         -- lists
-        v:matrices                     as v_matrices,
-        v:responseChoices              as v_response_choices,
+        {{ jget("v:matrices") }}                     as v_matrices,
+        {{ jget("v:responseChoices") }}              as v_response_choices,
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
     from survey_question
 )
 select * from renamed

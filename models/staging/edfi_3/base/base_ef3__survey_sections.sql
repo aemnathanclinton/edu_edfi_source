@@ -6,18 +6,18 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
+        __is_deleted as is_deleted,
 
-        v:id::string as record_guid,
+        {{ jget("v:id::string") }} as record_guid,
         -- identity components
-        v:surveyReference:surveyIdentifier::string as survey_id,
-        v:surveyReference:namespace::string        as namespace,
-        v:surveySectionTitle::string               as survey_section_title,
+        {{ jget("v:surveyReference:surveyIdentifier::string") }} as survey_id,
+        {{ jget("v:surveyReference:namespace::string") }}        as namespace,
+        {{ jget("v:surveySectionTitle::string") }}               as survey_section_title,
         -- references
-        v:surveyReference as survey_reference
+        {{ jget("v:surveyReference") }} as survey_reference
     from survey_sections
 )
 select * from renamed

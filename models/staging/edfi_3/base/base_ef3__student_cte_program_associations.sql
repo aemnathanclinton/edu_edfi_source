@@ -8,44 +8,44 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
+        __is_deleted as is_deleted,
 
-        v:id::string                                                                    as record_guid, 
+        {{ jget("v:id::string") }}                                                                    as record_guid, 
         ods_version, 
         data_model_version,
-        v:studentReference:studentUniqueId::int                                         as student_unique_id,
-        v:educationOrganizationReference:educationOrganizationId::int                   as ed_org_id,
-        v:educationOrganizationReference:link:rel::string                               as ed_org_type,
-        v:programReference:educationOrganizationId::int                                 as program_ed_org_id,
-        v:beginDate::date                                                               as program_enroll_begin_date, 
-        v:endDate::date                                                                 as program_enroll_end_date, 
-        v:programReference:programName::string                                          as program_name,
+        {{ jget("v:studentReference:studentUniqueId::int") }}                                         as student_unique_id,
+        {{ jget("v:educationOrganizationReference:educationOrganizationId::int") }}                   as ed_org_id,
+        {{ jget("v:educationOrganizationReference:link:rel::string") }}                               as ed_org_type,
+        {{ jget("v:programReference:educationOrganizationId::int") }}                                 as program_ed_org_id,
+        {{ jget("v:beginDate::date") }}                                                               as program_enroll_begin_date, 
+        {{ jget("v:endDate::date") }}                                                                 as program_enroll_end_date, 
+        {{ jget("v:programReference:programName::string") }}                                          as program_name,
 
-        v:nonTraditionalGenderStatus::boolean                                           as non_traditional_gender_status,
-        v:privateCTEProgram::boolean                                                    as private_cte_program,
-        v:ServedOutsideOfRegularSession::boolean                                        as served_outside_of_regular_session,
+        {{ jget("v:nonTraditionalGenderStatus::boolean") }}                                           as non_traditional_gender_status,
+        {{ jget("v:privateCTEProgram::boolean") }}                                                    as private_cte_program,
+        {{ jget("v:servedOutsideOfRegularSession::boolean") }}                                        as served_outside_of_regular_session,
 
         -- descriptors
-        {{ extract_descriptor('v:technicalSkillsAssessmentDescriptor') }}               as technical_skills_assessment,
-        {{ extract_descriptor('v:programReference:programTypeDescriptor') }}            as program_type,
-        {{ extract_descriptor('v:ReasonExitedDescriptor:ReasonExitedDescriptorId') }}   as reason_exited,
+        {{ extract_descriptor('v:technicalSkillsAssessmentDescriptor::string') }}               as technical_skills_assessment,
+        {{ extract_descriptor('v:programReference:programTypeDescriptor::string') }}            as program_type,
+        {{ extract_descriptor('v:reasonExitedDescriptor::string') }}   as reason_exited,
 
         -- references
-        v:educationOrganizationReference                                                as education_organization_reference,
-        v:programReference                                                              as program_reference, 
-        v:studentReference                                                              as student_reference,
+        {{ jget("v:educationOrganizationReference") }}                                                as education_organization_reference,
+        {{ jget("v:programReference") }}                                                              as program_reference, 
+        {{ jget("v:studentReference") }}                                                              as student_reference,
 
         -- lists
-        v:cteProgramServices                                                            as v_cte_program_services, 
-        v:ctePrograms                                                                   as v_cte_programs, 
-        v:programParticipationStatuses                                                  as v_program_participation_statuses, 
-        v:services                                                                      as v_services,
+        {{ jget("v:cteProgramServices") }}                                                            as v_cte_program_services, 
+        {{ jget("v:ctePrograms") }}                                                                   as v_cte_programs, 
+        {{ jget("v:programParticipationStatuses") }}                                                  as v_program_participation_statuses, 
+        {{ jget("v:services") }}                                                                      as v_services,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
         
     from source_stu_programs
 )

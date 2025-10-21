@@ -30,6 +30,21 @@ Notes:
     {{ return(adapter.dispatch('json_array_agg', 'edu_edfi_source')(expression, window, order_by, is_terminal)) }}
 {% endmacro %}
 
+{% macro sqlserver__json_array_agg(expression, window, order_by, is_terminal) -%}
+    -- Build JSON array using SQL Server FOR JSON; windowing not supported here (use a correlated subquery instead)
+    (
+        select {{ expression }}
+        {%- if order_by is not none %}
+        order by {{ order_by }}
+        {%- endif %}
+        for json path
+    )
+{%- endmacro %}
+
+{% macro default__json_array_agg(expression, window, order_by, is_terminal) -%}
+    cast('[]' as nvarchar(max))
+{%- endmacro %}
+
 {% macro snowflake__json_array_agg(expression, window, order_by, is_terminal) -%}
     array_agg({{ expression}}) 
     {%- if order_by is not none %} 

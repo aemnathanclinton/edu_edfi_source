@@ -6,27 +6,27 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
+        __is_deleted as is_deleted,
 
-        v:id::string                                             as record_guid,
+        {{ jget("v:id::string") }}                                             as record_guid,
         ods_version,
         data_model_version,
-        v:contactPriority::int                                   as contact_priority,
-        v:contactRestrictions::string                            as contact_restrictions,
-        v:emergencyContactStatus::boolean                        as is_emergency_contact,
-        v:livesWith::boolean                                     as is_living_with,
-        v:primaryContactStatus::boolean                          as is_primary_contact,
-        v:legalGuardian::boolean                                 as is_legal_guardian,
+        {{ jget("v:contactPriority::int") }}                                   as contact_priority,
+        {{ jget("v:contactRestrictions::string") }}                            as contact_restrictions,
+        {{ jget("v:emergencyContactStatus::boolean") }}                        as is_emergency_contact,
+        {{ jget("v:livesWith::boolean") }}                                     as is_living_with,
+        {{ jget("v:primaryContactStatus::boolean") }}                          as is_primary_contact,
+        {{ jget("v:legalGuardian::boolean") }}                                 as is_legal_guardian,
         {{ extract_descriptor('v:relationDescriptor::string') }} as relation_type,
         -- references
-        v:contactReference                                       as contact_reference,
-        v:studentReference                                       as student_reference,
+        {{ jget("v:contactReference") }}                                       as contact_reference,
+        {{ jget("v:studentReference") }}                                       as student_reference,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
     from student_contact_associations
 )
 select * from renamed

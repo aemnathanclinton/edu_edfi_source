@@ -24,4 +24,4 @@ deduped as (
     }}
 )
 select * from deduped
-where not is_deleted
+where is_deleted = 0

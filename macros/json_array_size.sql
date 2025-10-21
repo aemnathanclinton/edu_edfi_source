@@ -9,6 +9,13 @@ Arguments:
     {{ return(adapter.dispatch('json_array_size', 'edu_edfi_source')(column)) }}
 {% endmacro %}
 
+{% macro sqlserver__json_array_size(column) -%}
+    (select count(1) from openjson({{ column }}))
+{%- endmacro %}
+{% macro default__json_array_size(column) -%}
+    0
+{%- endmacro %}
+
 {% macro snowflake__json_array_size(column) -%}
     array_size({{ column }})
 {%- endmacro %}

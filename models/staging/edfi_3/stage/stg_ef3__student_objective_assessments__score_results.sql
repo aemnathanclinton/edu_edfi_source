@@ -11,7 +11,7 @@ flattened as (
         namespace,
         objective_assessment_identification_code,
         {{ extract_descriptor('value:assessmentReportingMethodDescriptor::string') }} as score_name,
-        value:result::string as score_result
+        {{ jget('value:result::string') }} as score_result
     from stage_student_objective_assessments
         {{ json_flatten('v_score_results') }}
 )

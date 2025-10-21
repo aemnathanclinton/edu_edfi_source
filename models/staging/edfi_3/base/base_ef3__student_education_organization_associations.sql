@@ -6,48 +6,48 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
-        v:id::string as record_guid,
+        __is_deleted as is_deleted,
+        {{ jget("v:id::string") }} as record_guid,
         ods_version,
         data_model_version,
         -- key columns
-        v:educationOrganizationReference:educationOrganizationId::int as ed_org_id,
-        v:educationOrganizationReference:link:rel::string             as ed_org_type,
-        v:studentReference:studentUniqueId::string                    as student_unique_id,
+        {{ jget("v:educationOrganizationReference:educationOrganizationId::int") }} as ed_org_id,
+        {{ jget("v:educationOrganizationReference:link:rel::string") }}             as ed_org_type,
+        {{ jget("v:studentReference:studentUniqueId::string") }}                    as student_unique_id,
         -- value columns
-        v:hispanicLatinoEthnicity::boolean as has_hispanic_latino_ethnicity,
-        v:loginId::string                  as login_id,
-        v:profileThumbnail                 as profile_thumbnail_url,
-        v:genderIdentity                   as gender_identity,
+        {{ jget("v:hispanicLatinoEthnicity::boolean") }} as has_hispanic_latino_ethnicity,
+        {{ jget("v:loginId::string") }}                  as login_id,
+        {{ jget("v:profileThumbnail::string") }}                 as profile_thumbnail_url,
+        {{ jget("v:genderIdentity::string") }}                   as gender_identity,
         -- descriptors
         {{ extract_descriptor('v:limitedEnglishProficiencyDescriptor::string') }}   as lep_code,
         {{ extract_descriptor('v:sexDescriptor::string') }}                         as gender,
         {{ extract_descriptor('v:oldEthnicityDescriptor::string') }}                as old_ethnicity,
         {{ extract_descriptor('v:supporterMilitaryConnectionDescriptor::string') }} as supporter_military_connection,
         -- references
-        v:studentReference               as student_reference,
-        v:educationOrganizationReference as education_organization_reference,
+        {{ jget("v:studentReference") }}               as student_reference,
+        {{ jget("v:educationOrganizationReference") }} as education_organization_reference,
         -- lists
-        v:addresses                  as v_addresses,
-        v:ancestryEthnicOrigins      as v_ancestry_ethnic_origins,
-        v:cohortYears                as v_cohort_years,
-        v:disabilities               as v_disabilities,
-        v:electronicMails            as v_electronic_mails,
-        v:internationalAddresses     as v_international_addresses,
-        v:languages                  as v_languages,
-        v:programParticipations      as v_program_participations, -- deprecated
-        v:races                      as v_races,
-        v:studentCharacteristics     as v_student_characteristics,
-        v:studentIdentificationCodes as v_student_identification_codes,
-        v:studentIndicators          as v_student_indicators,
-        v:telephones                 as v_telephones,
-        v:tribalAffiliations         as v_tribal_affiliations,
+        {{ jget("v:addresses") }}                  as v_addresses,
+        {{ jget("v:ancestryEthnicOrigins") }}      as v_ancestry_ethnic_origins,
+        {{ jget("v:cohortYears") }}                as v_cohort_years,
+        {{ jget("v:disabilities") }}               as v_disabilities,
+        {{ jget("v:electronicMails") }}            as v_electronic_mails,
+        {{ jget("v:internationalAddresses") }}     as v_international_addresses,
+        {{ jget("v:languages") }}                  as v_languages,
+        {{ jget("v:programParticipations") }}      as v_program_participations, -- deprecated
+        {{ jget("v:races") }}                      as v_races,
+        {{ jget("v:studentCharacteristics") }}     as v_student_characteristics,
+        {{ jget("v:studentIdentificationCodes") }} as v_student_identification_codes,
+        {{ jget("v:studentIndicators") }}          as v_student_indicators,
+        {{ jget("v:telephones") }}                 as v_telephones,
+        {{ jget("v:tribalAffiliations") }}         as v_tribal_affiliations,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
     from stu_ed_org
 )
 select * from renamed

@@ -6,23 +6,23 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
-        v:id::string as record_guid,
+        __is_deleted as is_deleted,
+        {{ jget("v:id::string") }} as record_guid,
         ods_version,
         data_model_version,
-        v:schoolId::int                                             as school_id,
-        v:nameOfInstitution::string                                 as school_name,
-        v:shortNameOfInstitution::string                            as school_short_name,
-        v:webSite::string                                           as website,
-        v:localEducationAgencyReference:localEducationAgencyId::int as lea_id,
+        {{ jget("v:schoolId::int") }}                                             as school_id,
+        {{ jget("v:nameOfInstitution::string") }}                                 as school_name,
+        {{ jget("v:shortNameOfInstitution::string") }}                            as school_short_name,
+        {{ jget("v:webSite::string") }}                                           as website,
+        {{ jget("v:localEducationAgencyReference:localEducationAgencyId::int") }} as lea_id,
         -- pull out school categories
         case
-            when {{ json_array_size('v:schoolCategories') }} = 1
+            when {{ json_array_size(jget("v:schoolCategories")) }} = 1
                 then {{ extract_descriptor('v:schoolCategories[0]:schoolCategoryDescriptor::string') }}
-            when {{ json_array_size('v:schoolCategories') }} > 1
+            when {{ json_array_size(jget("v:schoolCategories")) }} > 1
                 then 'Multiple Categories'
             else NULL
         end as school_category,
@@ -36,19 +36,19 @@ renamed as (
         {{ extract_descriptor('v:charterApprovalAgencyTypeDescriptor::string') }}          as charter_approval_agency,
         {{ extract_descriptor('v:magnetSpecialProgramEmphasisSchoolDescriptor::string') }} as magnet_type,
         -- references
-        v:localEducationAgencyReference   as local_education_agency_reference,
+        {{ jget("v:localEducationAgencyReference") }}   as local_education_agency_reference,
         -- unflattened lists
-        v:addresses                       as v_addresses,
-        v:educationOrganizationCategories as v_education_organization_categories,
-        v:gradeLevels                     as v_grade_levels,
-        v:identificationCodes             as v_identification_codes,
-        v:indicators                      as v_indicators,
-        v:institutionTelephones           as v_institution_telephones,
-        v:internationalAddresses          as v_international_addresses,
-        v:schoolCategories                as v_school_categories,
+        {{ jget("v:addresses") }}                       as v_addresses,
+        {{ jget("v:educationOrganizationCategories") }} as v_education_organization_categories,
+        {{ jget("v:gradeLevels") }}                     as v_grade_levels,
+        {{ jget("v:identificationCodes") }}             as v_identification_codes,
+        {{ jget("v:indicators") }}                      as v_indicators,
+        {{ jget("v:institutionTelephones") }}           as v_institution_telephones,
+        {{ jget("v:internationalAddresses") }}          as v_international_addresses,
+        {{ jget("v:schoolCategories") }}                as v_school_categories,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
     from schools
 )
 select * from renamed

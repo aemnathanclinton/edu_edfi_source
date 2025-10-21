@@ -6,33 +6,33 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         filename,
         file_row_number,
-        is_deleted,
-        v:id::string                               as record_guid,
+        __is_deleted as is_deleted,
+        {{ jget("v:id::string") }}                               as record_guid,
         ods_version,
         data_model_version,
-        v:schoolReference:schoolId                 as school_id,
-        v:sessionReference:schoolYear              as school_year,
-        v:sessionReference:sessionName::string     as session_name,
-        v:studentReference:studentUniqueId::string as student_unique_id,
-        v:eventDate::date                          as attendance_event_date,
-        v:attendanceEventReason::string            as attendance_event_reason,
-        v:eventDuration::float                    as event_duration,
-        v:schoolAttendanceDuration::float          as school_attendance_duration,
-        v:arrivalTime::string                      as arrival_time, --todo: look at format here
-        v:departureTime::string                    as departure_time, --todo: look at format here
+        {{ jget("v:schoolReference:schoolId") }}                 as school_id,
+        {{ jget("v:sessionReference:schoolYear") }}              as school_year,
+        {{ jget("v:sessionReference:sessionName::string") }}     as session_name,
+        {{ jget("v:studentReference:studentUniqueId::string") }} as student_unique_id,
+        {{ jget("v:eventDate::date") }}                          as attendance_event_date,
+        {{ jget("v:attendanceEventReason::string") }}            as attendance_event_reason,
+        {{ jget("v:eventDuration::float") }}                    as event_duration,
+        {{ jget("v:schoolAttendanceDuration::float") }}          as school_attendance_duration,
+        {{ jget("v:arrivalTime::string") }}                      as arrival_time, --todo: look at format here
+        {{ jget("v:departureTime::string") }}                    as departure_time, --todo: look at format here
         -- descriptors
         {{ extract_descriptor('v:attendanceEventCategoryDescriptor::string') }} as attendance_event_category,
         {{ extract_descriptor('v:educationalEnvironmentDescriptor::string') }}  as educational_environment,
         -- references
-        v:schoolReference  as school_reference,
-        v:sessionReference as session_reference,
-        v:studentReference as student_reference,
+        {{ jget("v:schoolReference") }}  as school_reference,
+        {{ jget("v:sessionReference") }} as session_reference,
+        {{ jget("v:studentReference") }} as student_reference,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
     from stu_sch_att
 )
 select * from renamed

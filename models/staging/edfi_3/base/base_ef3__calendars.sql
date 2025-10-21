@@ -6,22 +6,22 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
-        v:id::string                                  as record_guid,
+        __is_deleted as is_deleted,
+        {{ jget("v:id::string") }}                                  as record_guid,
         ods_version,
         data_model_version,
-        v:calendarCode::string                        as calendar_code,
-        v:schoolReference:schoolId::integer           as school_id,
-        v:schoolYearTypeReference:schoolYear::integer as school_year,
+        {{ jget("v:calendarCode::string") }}                        as calendar_code,
+        {{ jget("v:schoolReference:schoolId::integer") }}           as school_id,
+        {{ jget("v:schoolYearTypeReference:schoolYear::integer") }} as school_year,
         {{ extract_descriptor('v:calendarTypeDescriptor::string') }} as calendar_type,
-        v:schoolReference as school_reference,
-        v:gradeLevels     as v_grade_levels,
+        {{ jget("v:schoolReference") }} as school_reference,
+        {{ jget("v:gradeLevels") }}     as v_grade_levels,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
     from calendars
 )
 select * from renamed

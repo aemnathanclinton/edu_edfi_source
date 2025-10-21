@@ -14,8 +14,8 @@ formatted as (
         *,
         -- align old and new key name
         coalesce(
-            contact_reference:contactUniqueId::string,
-            parent_reference:parentUniqueId::string
+            {{ jget('contact_reference:contactUniqueId::string') }},
+            {{ jget('parent_reference:parentUniqueId::string') }}
         ) as contact_unique_id
     from union_parent_contact
 ),
@@ -40,4 +40,4 @@ deduped as (
     }}
 )
 select * from deduped
-where not is_deleted
+where is_deleted = 0

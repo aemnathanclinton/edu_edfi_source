@@ -6,32 +6,32 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
+        __is_deleted as is_deleted,
         -- fields
-        v:id::string                     as record_guid,
+        {{ jget("v:id::string") }}                     as record_guid,
         ods_version,
         data_model_version,
-        v:stateEducationAgencyId::int    as sea_id,
-        v:nameOfInstitution::string      as sea_name,
-        v:shortNameOfInstitution::string as sea_short_name,
-        v:webSite::string                as website,
+        {{ jget("v:stateEducationAgencyId::int") }}    as sea_id,
+        {{ jget("v:nameOfInstitution::string") }}      as sea_name,
+        {{ jget("v:shortNameOfInstitution::string") }} as sea_short_name,
+        {{ jget("v:webSite::string") }}                as website,
         -- descriptors
         {{ extract_descriptor('v:operationalStatusDescriptor::string') }} as operational_status,
         -- lists
-        v:accountabilities       as v_accountabilities,
-        v:addresses              as v_addresses,
-        v:categories             as v_categories,
-        v:federalFunds           as v_federal_funds,
-        v:identificationCodes    as v_identification_codes,
-        v:indicators             as v_indicators,
-        v:institutionTelephones  as v_institution_telephones,
-        v:internationalAddresses as v_international_addresses,
+        {{ jget("v:accountabilities") }}       as v_accountabilities,
+        {{ jget("v:addresses") }}              as v_addresses,
+        {{ jget("v:categories") }}             as v_categories,
+        {{ jget("v:federalFunds") }}           as v_federal_funds,
+        {{ jget("v:identificationCodes") }}    as v_identification_codes,
+        {{ jget("v:indicators") }}             as v_indicators,
+        {{ jget("v:institutionTelephones") }}  as v_institution_telephones,
+        {{ jget("v:internationalAddresses") }} as v_international_addresses,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
     from seas
 ) 
 select * from renamed

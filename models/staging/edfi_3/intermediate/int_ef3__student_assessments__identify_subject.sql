@@ -11,7 +11,7 @@ stg_assessments_single_subj as (
     from {{ ref('stg_ef3__assessments') }}
     -- the reason to do this is if we missed a multi subject assessment identifier in the subject xwalk,
     -- we would be assigning all subject rows to the student assessment record, which would be very wrong
-    where is_single_subject_identifier
+    where is_single_subject_identifier = 1
 ),
 -- this will be implementation specific
 subject_xwalk as (
@@ -34,13 +34,13 @@ score_result_to_subject as (
         base_stu_assessments.assessment_identifier,
         base_stu_assessments.namespace,
         student_assessment_identifier,
-        value:result::string as score_result
-    from base_stu_assessments
+        {{ jget('value:result::string') }} as score_result
+from base_stu_assessments
     join distinct_score_name
             on base_stu_assessments.assessment_identifier = distinct_score_name.assessment_identifier
             and base_stu_assessments.namespace = distinct_score_name.namespace
-        {{ json_flatten('v_score_results') }}
-            where {{ extract_descriptor('value:assessmentReportingMethodDescriptor::string') }} = score_name
+    {{ json_flatten('base_stu_assessments.v_score_results') }}
+    where {{ extract_descriptor('value:assessmentReportingMethodDescriptor::string') }} = score_name
 ),
 adding_subject as (
     select

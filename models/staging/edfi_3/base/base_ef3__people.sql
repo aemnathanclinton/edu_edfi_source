@@ -6,14 +6,14 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
+        __is_deleted as is_deleted,
 
-        v:id::string as record_guid,
+        {{ jget("v:id::string") }} as record_guid,
         -- identity components
-        v:personId::int as person_id,
+        {{ jget("v:personId::int") }} as person_id,
         {{ extract_descriptor('v:sourceSystemDescriptor::string') }} as source_system
     from people
 )

@@ -13,6 +13,13 @@ Arguments:
     {{ return(adapter.dispatch('json_ci_get', 'edu_edfi_source')(column, value)) }}
 {% endmacro %}
 
+{% macro sqlserver__json_ci_get(column, value) -%}
+    json_value({{ column }}, '$."{{ value }}"')
+{%- endmacro %}
+{% macro default__json_ci_get(column, value) -%}
+    null
+{%- endmacro %}
+
 {% macro snowflake__json_ci_get(column, value) -%}
     get_ignore_case({{ column }}, '{{ value }}')
 {%- endmacro %}

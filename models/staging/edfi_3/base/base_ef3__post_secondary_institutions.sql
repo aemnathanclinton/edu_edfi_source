@@ -6,31 +6,31 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
+        __is_deleted as is_deleted,
 
-        v:id::string as record_guid,
+        {{ jget("v:id::string") }} as record_guid,
         -- identity components
-        v:postSecondaryInstitutionId::int as post_secondary_institution_id,
+        {{ jget("v:postSecondaryInstitutionId::int") }} as post_secondary_institution_id,
         -- non-identity components
-        v:nameOfInstitution::string       as name_of_institution,
-        v:shortNameOfInstitution::string  as short_name_of_institution,
-        v:webSite::string                 as web_site,
+        {{ jget("v:nameOfInstitution::string") }}       as name_of_institution,
+        {{ jget("v:shortNameOfInstitution::string") }}  as short_name_of_institution,
+        {{ jget("v:webSite::string") }}                 as web_site,
         -- descriptors
         {{ extract_descriptor('v:postSecondaryInstitutionLevelDescriptor::string')}} as post_secondary_institution_level,
         {{ extract_descriptor('v:administrativeFundingControlDescriptor::string')}}  as administrative_funding_control,
         {{ extract_descriptor('v:federalLocaleCodeDescriptor::string')}}             as federal_locale_code,
         {{ extract_descriptor('v:operationalStatusDescriptor::string')}}             as operational_status_descriptor,
         -- unflattened lists
-        v:categories             as v_categories,
-        v:addresses              as v_addresses,
-        v:identificationCodes    as v_identification_codes,
-        v:indicators             as v_indicators,
-        v:institutionTelephones  as v_institution_telephones,
-        v:internationalAddresses as v_international_addresses,
-        v:mediumOfInstructions   as v_medium_of_instructions
+        {{ jget("v:categories") }}             as v_categories,
+        {{ jget("v:addresses") }}              as v_addresses,
+        {{ jget("v:identificationCodes") }}    as v_identification_codes,
+        {{ jget("v:indicators") }}             as v_indicators,
+        {{ jget("v:institutionTelephones") }}  as v_institution_telephones,
+        {{ jget("v:internationalAddresses") }} as v_international_addresses,
+        {{ jget("v:mediumOfInstructions") }}   as v_medium_of_instructions
     from post_secondary_institutions
 )
 select * from renamed

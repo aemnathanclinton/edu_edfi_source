@@ -6,33 +6,33 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
-        v:id::string as record_guid,
+        __is_deleted as is_deleted,
+        {{ jget("v:id::string") }} as record_guid,
         ods_version,
         data_model_version,
-        v:educationOrganizationReference:educationOrganizationId::int as ed_org_id,
-        v:educationOrganizationReference:link:rel::string             as ed_org_type,
-        v:staffReference:staffUniqueId::string                        as staff_unique_id,
-        v:positionTitle::string                                       as position_title,
-        v:beginDate::date                                             as begin_date,
-        v:endDate::date                                               as end_date,
-        v:fullTimeEquivalency::float                                  as full_time_equivalency,
-        v:orderOfAssignment::float                                    as order_of_assignment,
-        v:credentialReference:credentialIdentifier::string            as credential_identifier,
+        {{ jget("v:educationOrganizationReference:educationOrganizationId::int") }} as ed_org_id,
+        {{ jget("v:educationOrganizationReference:link:rel::string") }}             as ed_org_type,
+        {{ jget("v:staffReference:staffUniqueId::string") }}                        as staff_unique_id,
+        {{ jget("v:positionTitle::string") }}                                       as position_title,
+        {{ jget("v:beginDate::date") }}                                             as begin_date,
+        {{ jget("v:endDate::date") }}                                               as end_date,
+        {{ jget("v:fullTimeEquivalency::float") }}                                  as full_time_equivalency,
+        {{ jget("v:orderOfAssignment::float") }}                                    as order_of_assignment,
+        {{ jget("v:credentialReference:credentialIdentifier::string") }}            as credential_identifier,
         -- descriptors
         {{ extract_descriptor('v:credentialReference:stateOfIssueStateAbbreviationDescriptor::string') }} as credential_state,
         {{ extract_descriptor('v:staffClassificationDescriptor::string') }}                               as staff_classification,
         -- references
-        v:credentialReference            as credential_reference,
-        v:educationOrganizationReference as education_organization_reference,
-        v:staffReference                 as staff_reference,
-        v:employmentStaffEducationOrganizationEmploymentAssociationReference as staff_ed_org_employment_reference,
+        {{ jget("v:credentialReference") }}            as credential_reference,
+        {{ jget("v:educationOrganizationReference") }} as education_organization_reference,
+        {{ jget("v:staffReference") }}                 as staff_reference,
+        {{ jget("v:employmentStaffEducationOrganizationEmploymentAssociationReference") }} as staff_ed_org_employment_reference,
 
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget("v:_ext") }} as v_ext
     from staff_ed_org_assign
 )
 select * from renamed

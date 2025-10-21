@@ -1,7 +1,10 @@
 {{ config(
     materialized=var('edu:edfi_source:large_stg_materialization', 'table'),
     unique_key=['k_student', 'k_course_section', 'attendance_event_category', 'attendance_event_date'],
-    post_hook=["{{edu_edfi_source.stg_post_hook_delete()}}"]
+        post_hook=[
+            "{{edu_edfi_source.stg_post_hook_delete()}}",
+            "{% if target.type == 'sqlserver' %}IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'ix_stg_ssae_uk') CREATE NONCLUSTERED INDEX ix_stg_ssae_uk ON {{ this }} (k_student, k_course_section, attendance_event_category, attendance_event_date);{% endif %}"
+        ]
 ) }}
 with base_student_section_attend as (
     select * from {{ ref('base_ef3__student_section_attendance_events') }}
@@ -31,6 +34,6 @@ deduped as (
 )
 select * from deduped
 {% if not is_incremental() %}
-where not is_deleted
+where is_deleted = 0
 {% endif %}
 

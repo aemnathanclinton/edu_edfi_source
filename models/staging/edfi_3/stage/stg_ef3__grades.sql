@@ -32,6 +32,6 @@ deduped as (
 )
 select * from deduped
 {% if not is_incremental() %}
-where not is_deleted
+where is_deleted = 0
 {% endif %}
 order by tenant_code, school_year desc, student_unique_id

@@ -42,5 +42,5 @@ deduped as (
 )
 select * from deduped
 {% if not is_incremental() %}
-where not is_deleted
+where is_deleted = 0
 {% endif %}

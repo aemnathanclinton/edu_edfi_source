@@ -40,7 +40,7 @@ deduped_within_year as (
 deduped_within_year_no_deletes as (
     select * from deduped_within_year 
     {% if not is_incremental() %}
-    where not is_deleted
+    where is_deleted = 0
     {% endif %}
 
 ),

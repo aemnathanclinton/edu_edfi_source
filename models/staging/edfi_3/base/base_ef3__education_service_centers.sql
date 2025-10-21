@@ -6,31 +6,31 @@ renamed as (
         tenant_code,
         api_year,
         pull_timestamp,
-        last_modified_timestamp,
+        __last_modified_timestamp as last_modified_timestamp,
         file_row_number,
         filename,
-        is_deleted,
-        v:id::string                                            as record_guid,
+        __is_deleted as is_deleted,
+        {{ jget('v:id::string') }}                                            as record_guid,
         ods_version,
         data_model_version,
-        v:educationServiceCenterId::string                      as esc_id,
-        v:nameOfInstitution::string                             as esc_name,
-        v:shortNameOfInstitution::string                        as esc_short_name,
-        v:stateEducationAgencyReference:stateEducationAgencyId  as sea_id,
-        v:webSite::string                                       as website,
+        {{ jget('v:educationServiceCenterId::string') }}                      as esc_id,
+        {{ jget('v:nameOfInstitution::string') }}                             as esc_name,
+        {{ jget('v:shortNameOfInstitution::string') }}                        as esc_short_name,
+        {{ jget('v:stateEducationAgencyReference:stateEducationAgencyId') }}  as sea_id,
+        {{ jget('v:webSite::string') }}                                       as website,
         -- descriptors
         {{ extract_descriptor('v:operationalStatusDescriptor::string') }} as operational_status,
         -- unflattened lists
-        v:addresses                         as v_addresses,
-        v:categories                        as v_categories,
-        v:identificationCodes               as v_identification_codes,
-        v:indicators                        as v_indicators,
-        v:institutionTelephones             as v_institution_telephones,
-        v:internationalAddresses            as v_international_addresses,
+        {{ jget('v:addresses') }}                         as v_addresses,
+        {{ jget('v:categories') }}                        as v_categories,
+        {{ jget('v:identificationCodes') }}               as v_identification_codes,
+        {{ jget('v:indicators') }}                        as v_indicators,
+        {{ jget('v:institutionTelephones') }}             as v_institution_telephones,
+        {{ jget('v:internationalAddresses') }}            as v_international_addresses,
         -- references
-        v:stateEducationAgencyReference     as state_education_agency_reference,
+        {{ jget('v:stateEducationAgencyReference') }}     as state_education_agency_reference,
         -- edfi extensions
-        v:_ext as v_ext
+        {{ jget('v:_ext') }} as v_ext
     from service_centers
 )
 select * from renamed
