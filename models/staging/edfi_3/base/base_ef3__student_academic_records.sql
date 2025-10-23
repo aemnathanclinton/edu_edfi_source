@@ -48,14 +48,14 @@ renamed as (
         {{ jget("v:studentReference") }}               as student_reference,
         {{ jget("v:educationOrganizationReference") }} as education_organization_reference,
         -- lists
-        {{ jget("v:academicHonors") }}     as v_academic_honors,
-        {{ jget("v:diplomas") }}           as v_diplomas,
-        {{ jget("v:gradePointAverages") }} as v_grade_point_averages,
-        {{ jget("v:recognitions") }}       as v_recognitions,
-        {{ jget("v:reportCards") }}        as v_report_cards,
+        {{ jget("v:academicHonors::string") }}     as v_academic_honors,
+        {{ jget("v:diplomas::string") }}           as v_diplomas,
+        {{ jget("v:gradePointAverages::string") }} as v_grade_point_averages,
+        {{ jget("v:recognitions::string") }}       as v_recognitions,
+        {{ jget("v:reportCards::string") }}        as v_report_cards,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from academic_records
 )
 select * from renamed

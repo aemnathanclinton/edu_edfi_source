@@ -46,15 +46,15 @@ renamed as (
         {{ jget('v:externalEducationOrganizationReference') }} as external_education_organization_reference,
         {{ jget('v:responsibleTeacherStaffReference') }}       as responsible_teacher_staff_reference,
 				-- non-identity collection components
-				{{ jget('v:earnedAdditionalCredits') }}              as v_earned_additional_credits,
-        {{ jget('v:academicSubjects') }}                     as v_academic_subjects,
-        {{ jget('v:alternativeCourseIdentificationCodes') }} as v_alternative_course_identification_codes,
-        {{ jget('v:creditCategories') }}                     as v_credit_categories,
-        {{ jget('v:coursePrograms') }}                       as v_programs,
-        {{ jget('v:sections') }}                             as v_sections,
+				{{ jget('v:earnedAdditionalCredits::string') }}              as v_earned_additional_credits,
+        {{ jget('v:academicSubjects::string') }}                     as v_academic_subjects,
+        {{ jget('v:alternativeCourseIdentificationCodes::string') }} as v_alternative_course_identification_codes,
+        {{ jget('v:creditCategories::string') }}                     as v_credit_categories,
+        {{ jget('v:coursePrograms::string') }}                       as v_programs,
+        {{ jget('v:sections::string') }}                             as v_sections,
 
         -- edfi extensions
-        {{ jget('v:_ext') }} as v_ext
+        {{ jget('v:_ext::string') }} as v_ext
     from course_transcripts
 )
 select * from renamed

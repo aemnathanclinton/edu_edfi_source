@@ -18,10 +18,10 @@ renamed as (
         {{ jget("v:schoolYearTypeReference:schoolYear::integer") }} as school_year,
         {{ extract_descriptor('v:calendarTypeDescriptor::string') }} as calendar_type,
         {{ jget("v:schoolReference") }} as school_reference,
-        {{ jget("v:gradeLevels") }}     as v_grade_levels,
+        {{ jget("v:gradeLevels::string") }}     as v_grade_levels,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from calendars
 )
 select * from renamed

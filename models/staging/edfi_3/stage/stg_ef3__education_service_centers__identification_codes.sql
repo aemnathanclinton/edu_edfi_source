@@ -7,7 +7,7 @@ flattened as (
         api_year,
         k_esc,
         {{ extract_descriptor('value:educationOrganizationIdentificationSystemDescriptor::string') }} as id_system,
-        value:identificationCode::string as id_code
+        {{ jget('value:identificationCode::string') }} as id_code
     from stg_service_centers
         {{ json_flatten('v_identification_codes') }}
 )

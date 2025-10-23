@@ -17,10 +17,10 @@ renamed as (
         {{ jget("v:classPeriodName::string") }}           as class_period_name,
         {{ jget("v:officialAttendancePeriod::boolean") }} as is_official_attendance_period,
         {{ jget("v:schoolReference") }}                   as school_reference,
-        {{ jget("v:meetingTimes") }}                      as v_meeting_times,
+        {{ jget("v:meetingTimes::string") }}             as v_meeting_times,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from class_periods
 )
 select * from renamed

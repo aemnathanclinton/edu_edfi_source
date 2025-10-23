@@ -32,8 +32,8 @@ flattened as (
         {{ jget('value:objectiveAssessmentReference:identificationCode::string') }} as objective_assessment_identification_code,
         {{ jget('value:objectiveAssessmentReference') }} as objective_assessment_reference,
         -- unflattened lists
-        {{ jget('value:performanceLevels') }} as v_performance_levels,
-        {{ jget('value:scoreResults') }} as v_score_results
+        {{ jget('value:performanceLevels::string') }} as v_performance_levels,
+        {{ jget('value:scoreResults::string') }} as v_score_results
     from stage_student_assessments
         {{ json_flatten('v_student_objective_assessments') }}
 ),

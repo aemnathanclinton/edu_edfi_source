@@ -22,15 +22,15 @@ renamed as (
         {{ jget('v:totalRequiredCredits::float') }}                                           as total_required_credits,
         {{ jget('v:individualPlan::boolean') }}                                               as is_individual_plan,
         -- lists
-        {{ jget('v:creditsByCreditCategories') }} as v_credits_by_credit_categories,
-        {{ jget('v:creditsByCourses') }}          as v_credits_by_courses,
-        {{ jget('v:creditsBySubjects') }}         as v_credits_by_subjects,   
-        {{ jget('v:requiredAssessments') }}       as v_required_assessments,
+        {{ jget('v:creditsByCreditCategories::string') }} as v_credits_by_credit_categories,
+        {{ jget('v:creditsByCourses::string') }}          as v_credits_by_courses,
+        {{ jget('v:creditsBySubjects::string') }}         as v_credits_by_subjects,   
+        {{ jget('v:requiredAssessments::string') }}       as v_required_assessments,
         --references
         {{ jget('v:educationOrganizationReference') }}    as education_organization_reference,
 
         -- edfi extensions
-        {{ jget('v:_ext') }} as v_ext
+        {{ jget('v:_ext::string') }} as v_ext
     from graduation_plans
 )
 select * from renamed

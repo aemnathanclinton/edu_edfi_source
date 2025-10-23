@@ -26,13 +26,13 @@ renamed as (
         {{ extract_descriptor('v:teachingCredentialDescriptor::string') }}            as teaching_credential,
         {{ extract_descriptor('v:teachingCredentialBasisDescriptor::string') }}       as teaching_credential_basis,
         -- unnested lists
-        {{ jget('v:endorsements') }}     as v_endorsements,
-        {{ jget('v:academicSubjects') }} as v_academic_subjects,
-        {{ jget('v:gradeLevels') }}      as v_grade_levels,
+        {{ jget('v:endorsements::string') }}     as v_endorsements,
+        {{ jget('v:academicSubjects::string') }} as v_academic_subjects,
+        {{ jget('v:gradeLevels::string') }}      as v_grade_levels,
         -- references
-        {{ jget('v:studentAcademicRecords') }} as student_academic_records,
+        {{ jget('v:studentAcademicRecords::string') }} as student_academic_records,
         -- edfi extensions
-        {{ jget('v:_ext') }} as v_ext 
+        {{ jget('v:_ext::string') }} as v_ext 
     from credentials
 )
 select * from renamed

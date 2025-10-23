@@ -23,10 +23,10 @@ renamed as (
         {{ jget("v:disciplineIncidentReference") }} as discipline_incident_reference,
         {{ jget("v:studentReference") }}           as student_reference,
         -- lists
-        {{ jget("v:disciplineIncidentParticipationCodes") }} as v_discipline_incident_participation_codes,
+        {{ jget("v:disciplineIncidentParticipationCodes::string") }} as v_discipline_incident_participation_codes,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from student_discipline_incident_behavior
 )
 select * from renamed

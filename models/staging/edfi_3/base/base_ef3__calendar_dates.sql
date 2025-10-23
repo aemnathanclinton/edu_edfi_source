@@ -18,11 +18,11 @@ renamed as (
         {{ jget("v:calendarReference:schoolId::integer") }}     as school_id,
         {{ jget("v:calendarReference:schoolYear::integer") }}   as school_year,
         {{ jget("v:calendarReference") }}                       as calendar_reference,
-        {{ jget("v:calendarEvents") }}                          as v_calendar_events,
+        {{ jget("v:calendarEvents::string") }}                          as v_calendar_events,
         {{ json_array_size(jget("v:calendarEvents")) }} as n_calendar_events,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from calendar_dates
 )
 select * from renamed

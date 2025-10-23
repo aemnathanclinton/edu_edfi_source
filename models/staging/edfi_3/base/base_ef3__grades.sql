@@ -33,13 +33,13 @@ renamed as (
         {{ extract_descriptor('v:gradeTypeDescriptor::string') }} as grade_type,
         {{ extract_descriptor('v:performanceBaseConversionDescriptor::string') }} as performance_base_conversion,
         -- embedded lists
-        {{ jget("v:learningStandardGrades") }} as v_learning_standard_grades,
+        {{ jget("v:learningStandardGrades::string") }} as v_learning_standard_grades,
         -- references
         {{ jget("v:studentSectionAssociationReference") }} as student_section_association_reference,
         {{ jget("v:gradingPeriodReference") }}             as grading_period_reference,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from grades
 )
 select * from renamed

@@ -42,14 +42,14 @@ renamed as (
         {{ jget("v:locationReference") }}       as location_reference,
         {{ jget("v:locationSchoolReference") }} as location_school_reference,
         -- lists
-        {{ jget("v:characteristics") }}            as v_section_characteristics,
-        {{ jget("v:classPeriods") }}               as v_class_periods,
-        {{ jget("v:courseLevelCharacteristics") }} as v_course_level_characteristics,
-        {{ jget("v:offeredGradeLevels") }}         as v_offered_grade_levels,
-        {{ jget("v:programs") }}                   as v_programs,
+        {{ jget("v:characteristics::string") }}            as v_section_characteristics,
+        {{ jget("v:classPeriods::string") }}               as v_class_periods,
+        {{ jget("v:courseLevelCharacteristics::string") }} as v_course_level_characteristics,
+        {{ jget("v:offeredGradeLevels::string") }}         as v_offered_grade_levels,
+        {{ jget("v:programs::string") }}                   as v_programs,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from sections
 )
 select * from renamed

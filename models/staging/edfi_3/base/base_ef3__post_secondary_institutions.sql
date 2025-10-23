@@ -24,13 +24,13 @@ renamed as (
         {{ extract_descriptor('v:federalLocaleCodeDescriptor::string')}}             as federal_locale_code,
         {{ extract_descriptor('v:operationalStatusDescriptor::string')}}             as operational_status_descriptor,
         -- unflattened lists
-        {{ jget("v:categories") }}             as v_categories,
-        {{ jget("v:addresses") }}              as v_addresses,
-        {{ jget("v:identificationCodes") }}    as v_identification_codes,
-        {{ jget("v:indicators") }}             as v_indicators,
-        {{ jget("v:institutionTelephones") }}  as v_institution_telephones,
-        {{ jget("v:internationalAddresses") }} as v_international_addresses,
-        {{ jget("v:mediumOfInstructions") }}   as v_medium_of_instructions
+        {{ jget("v:categories::string") }}             as v_categories,
+        {{ jget("v:addresses::string") }}              as v_addresses,
+        {{ jget("v:identificationCodes::string") }}    as v_identification_codes,
+        {{ jget("v:indicators::string") }}             as v_indicators,
+        {{ jget("v:institutionTelephones::string") }}  as v_institution_telephones,
+        {{ jget("v:internationalAddresses::string") }} as v_international_addresses,
+        {{ jget("v:mediumOfInstructions::string") }}   as v_medium_of_instructions
     from post_secondary_institutions
 )
 select * from renamed

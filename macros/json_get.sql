@@ -1,5 +1,6 @@
 {# Cross-platform JSON getter: accepts a Snowflake-style path like "v:foo:bar::string" and emits the right SQL #}
-{% macro jget(path_expr) -%}
+{# Optional string_size parameter allows specifying nvarchar size for string types (default: max) #}
+{% macro jget(path_expr, string_size='max') -%}
     {# path_expr should be a string literal like "v:field[:nested]::type" or "v:array" #}
     {%- if target.type == 'sqlserver' -%}
         {%- set expr = path_expr -%}
@@ -20,7 +21,7 @@
         {%- else -%}
             {%- set lower = dtype|lower -%}
             {%- if lower in ['string', 'variant'] -%}
-                try_cast(json_value({{ root }}, '{{ path }}') as nvarchar(max))
+                try_cast(json_value({{ root }}, '{{ path }}') as nvarchar({{ string_size }}))
             {%- elif lower in ['date'] -%}
                 try_cast(json_value({{ root }}, '{{ path }}') as date)
             {%- elif lower in ['timestamp', 'timestamp_ntz', 'datetime'] -%}

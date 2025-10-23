@@ -30,18 +30,18 @@ renamed as (
         {{ extract_descriptor('v:highestCompletedLevelOfEducationDescriptor::string') }} as highest_completed_level_of_education,
         {{ extract_descriptor('v:personReference:sourceSystemDescriptor::string') }}     as person_source_system,
         -- references
-        {{ jget('v:personReference') }}                 as person_reference,
+        {{ jget('v:personReference::string') }}                 as person_reference,
         -- unflattened lists
-        {{ jget('v:addresses') }}                       as v_addresses,
-        {{ jget('v:internationalAddresses') }}          as v_international_addresses,
-        {{ jget('v:electronicMails') }}                 as v_electronic_mails,
-        {{ jget('v:telephones') }}                      as v_telephones,
-        {{ jget('v:languages') }}                       as v_languages,
-        {{ jget('v:otherNames') }}                      as v_other_names,
-        {{ jget('v:personalIdentificationDocuments') }} as v_personal_identification_documents,
+        {{ jget('v:addresses::string') }}                       as v_addresses,
+        {{ jget('v:internationalAddresses::string') }}          as v_international_addresses,
+        {{ jget('v:electronicMails::string') }}                 as v_electronic_mails,
+        {{ jget('v:telephones::string') }}                      as v_telephones,
+        {{ jget('v:languages::string') }}                       as v_languages,
+        {{ jget('v:otherNames::string') }}                      as v_other_names,
+        {{ jget('v:personalIdentificationDocuments::string') }} as v_personal_identification_documents,
 
         -- edfi extensions
-        {{ jget('v:_ext') }} as v_ext
+        {{ jget('v:_ext::string') }} as v_ext
     from contacts
 )
 select * from renamed

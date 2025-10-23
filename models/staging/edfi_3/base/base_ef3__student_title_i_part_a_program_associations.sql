@@ -40,12 +40,12 @@ renamed as (
         {{ jget("v:studentReference") }}               as student_reference,
 
         -- lists
-        {{ jget("v:programParticipationStatuses") }} as v_program_participation_statuses,
-        {{ jget("v:services") }}                     as v_services,
-        {{ jget("v:titleIPartAProgramServices") }}   as v_title_i_part_a_program_services,
+        {{ jget("v:programParticipationStatuses::string") }} as v_program_participation_statuses,
+        {{ jget("v:services::string") }}                     as v_services,
+        {{ jget("v:titleIPartAProgramServices::string") }}   as v_title_i_part_a_program_services,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
 
     from source_stu_programs
 )

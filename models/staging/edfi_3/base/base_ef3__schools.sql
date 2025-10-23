@@ -38,17 +38,17 @@ renamed as (
         -- references
         {{ jget("v:localEducationAgencyReference") }}   as local_education_agency_reference,
         -- unflattened lists
-        {{ jget("v:addresses") }}                       as v_addresses,
-        {{ jget("v:educationOrganizationCategories") }} as v_education_organization_categories,
-        {{ jget("v:gradeLevels") }}                     as v_grade_levels,
-        {{ jget("v:identificationCodes") }}             as v_identification_codes,
-        {{ jget("v:indicators") }}                      as v_indicators,
-        {{ jget("v:institutionTelephones") }}           as v_institution_telephones,
-        {{ jget("v:internationalAddresses") }}          as v_international_addresses,
-        {{ jget("v:schoolCategories") }}                as v_school_categories,
+        {{ jget("v:addresses::string") }}                       as v_addresses,
+        {{ jget("v:educationOrganizationCategories::string") }} as v_education_organization_categories,
+        {{ jget("v:gradeLevels::string") }}                     as v_grade_levels,
+        {{ jget("v:identificationCodes::string") }}             as v_identification_codes,
+        {{ jget("v:indicators::string") }}                      as v_indicators,
+        {{ jget("v:institutionTelephones::string") }}           as v_institution_telephones,
+        {{ jget("v:internationalAddresses::string") }}          as v_international_addresses,
+        {{ jget("v:schoolCategories::string") }}                as v_school_categories,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from schools
 )
 select * from renamed

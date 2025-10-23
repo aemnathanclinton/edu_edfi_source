@@ -43,11 +43,11 @@ renamed as (
         {{ jget("v:studentReference") }}               as student_reference,
 
         -- lists
-        {{ jget("v:programParticipationStatuses") }} as v_program_participation_statuses,
-        {{ jget("v:homelessProgramServices") }}      as v_homeless_program_services,
+        {{ jget("v:programParticipationStatuses::string") }} as v_program_participation_statuses,
+        {{ jget("v:homelessProgramServices::string") }}      as v_homeless_program_services,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
 
     from source_stu_programs
 )

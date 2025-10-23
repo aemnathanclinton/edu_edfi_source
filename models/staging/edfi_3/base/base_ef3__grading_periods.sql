@@ -25,7 +25,7 @@ renamed as (
         {{ jget('v:schoolReference') }} as school_reference,
 
         -- edfi extensions
-        {{ jget('v:_ext') }} as v_ext
+        {{ jget('v:_ext::string') }} as v_ext
     from grading_periods
 )
 select * from renamed

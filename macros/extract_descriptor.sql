@@ -1,12 +1,12 @@
 {# grab descriptor codes from namespaced descriptor values #}
-{% macro extract_descriptor(col,descriptor_name=None) -%}
+{% macro extract_descriptor(col,descriptor_name=None,string_size='max') -%}
   {# Determine descriptor key name from the column expression string, if provided in the typical v:fooDescriptor::string form #}
   {%- set stripped_col = (descriptor_name or col.split(":")[-3]) -%}
   {%- set config = var('descriptors', {}).get(stripped_col) or None -%}
   {%- set replace_with = config['replace_with'] if config is not none else none -%}
 
   {%- if target.type == 'sqlserver' -%}
-    {%- set base = jget(col) -%}
+    {%- set base = jget(col, string_size) -%}
     {%- set right_of_hash = "substring(" ~ base ~ ", charindex('#', " ~ base ~ ") + 1, len(" ~ base ~ "))" -%}
     {%- set left_of_hash  = "left(" ~ base ~ ", charindex('#', " ~ base ~ ") - 1)" -%}
     {%- set last_path_seg = "right(namespace, charindex('/', reverse(namespace)) - 1)" -%}

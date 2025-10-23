@@ -17,16 +17,9 @@ dedupe_base_student_discipline_incident  as (
 -- projects should only ever have one of the two models in use
 format_student_discipline_incident as (
     select 
-        {{ dbt_utils.star(ref('base_ef3__student_discipline_incident_associations'), 
+        {{ star(from=ref('base_ef3__student_discipline_incident_associations'), 
             except=['student_participation_code', 'v_behaviors', 'v_ext']) }},
-        {{
-            json_array_agg(
-                json_object_construct(
-                    [['disciplineIncidentParticipationCodeDescriptor', 'student_participation_code']]
-                ),
-            window='over (partition by incident_id, school_id, student_unique_id)',
-            is_terminal=True)
-        }} as v_discipline_incident_participation_codes,
+        '[{"disciplineIncidentParticipationCodeDescriptor":"' + student_participation_code + '"}]' as v_discipline_incident_participation_codes,
         v_ext
     from dedupe_base_student_discipline_incident
     {% set non_offender_codes =  var('edu:discipline:non_offender_codes')  %}
@@ -50,8 +43,8 @@ keyed as (
         {{ gen_skey('k_student') }},
         {{ gen_skey('k_student_xyear') }},
         {{ gen_skey('k_school', 'discipline_incident_reference') }},
-    {{ gen_skey('k_discipline_incident') }},
-    stacked.*
+        {{ gen_skey('k_discipline_incident') }},
+        stacked.*
         {{ extract_extension(model_name=this.name, flatten=True) }}
     from stacked
 ),

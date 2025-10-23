@@ -31,10 +31,10 @@ renamed as (
         {{ jget("v:sectionReference") }} as section_reference,
 
         -- lists
-        {{ jget("v:programs") }} as v_programs,
+        {{ jget("v:programs::string") }} as v_programs,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from student_section
 )
 select * from renamed

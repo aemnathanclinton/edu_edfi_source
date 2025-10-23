@@ -1,0 +1,190 @@
+version: 2
+
+sources:
+  - name: raw_edfi_3
+    description: "Raw EdFi 3.x data source tables"
+    database: raw_edfi_3
+    schema: dbo
+    tables:
+      - name: _deletes
+        description: "Delete tracking table"
+      - name: _descriptors
+        description: "EdFi descriptors"
+      - name: applicant_profiles
+        description: "Applicant profile data"
+      - name: applications
+        description: "Application data"
+      - name: assessments
+        description: "Assessment data"
+      - name: bell_schedules
+        description: "Bell schedule data"
+      - name: calendar_dates
+        description: "Calendar dates data"
+      - name: calendars
+        description: "Calendar data"
+      - name: candidate_educator_preparation_program_associations
+        description: "Candidate educator preparation program association data"
+      - name: candidate_relationship_to_staff_associations
+        description: "Candidate relationship to staff association data"
+      - name: candidates
+        description: "Candidate data"
+      - name: certification_exam_results
+        description: "Certification exam result data"
+      - name: certification_exams
+        description: "Certification exam data"
+      - name: certifications
+        description: "Certification data"
+      - name: class_periods
+        description: "Class period data"
+      - name: cohorts
+        description: "Cohort data"
+      - name: contacts
+        description: "Contact data"
+      - name: course_offerings
+        description: "Course offering data"
+      - name: course_transcripts
+        description: "Course transcript data"
+      - name: courses
+        description: "Course data"
+      - name: credentials
+        description: "Credential data"
+      - name: discipline_actions
+        description: "Discipline action data"
+      - name: discipline_incidents
+        description: "Discipline incident data"
+      - name: education_organization_network_associations
+        description: "Education organization network association data"
+      - name: education_organization_networks
+        description: "Education organization network data"
+      - name: education_service_centers
+        description: "Education service center data"
+      - name: educator_preparation_programs
+        description: "Educator preparation program data"
+      - name: evaluation_element_ratings
+        description: "Evaluation element rating data"
+      - name: evaluation_elements
+        description: "Evaluation element data"
+      - name: evaluation_objective_ratings
+        description: "Evaluation objective rating data"
+      - name: evaluation_objectives
+        description: "Evaluation objective data"
+      - name: evaluation_ratings
+        description: "Evaluation rating data"
+      - name: evaluations
+        description: "Evaluation data"
+      - name: fieldwork_experiences
+        description: "Fieldwork experience data"
+      - name: financial_aids
+        description: "Financial aid data"
+      - name: grades
+        description: "Grade data"
+      - name: grading_periods
+        description: "Grading period data"
+      - name: graduation_plans
+        description: "Graduation plan data"
+      - name: learning_standards
+        description: "Learning standard data"
+      - name: local_education_agencies
+        description: "Local education agency data"
+      - name: locations
+        description: "Location data"
+      - name: objective_assessments
+        description: "Objective assessment data"
+      - name: parents
+        description: "Parent data"
+      - name: people
+        description: "People data"
+      - name: performance_evaluation_ratings
+        description: "Performance evaluation rating data"
+      - name: performance_evaluations
+        description: "Performance evaluation data"
+      - name: post_secondary_institutions
+        description: "Post secondary institution data"
+      - name: programs
+        description: "Program data"
+      - name: restraint_events
+        description: "Restraint event data"
+      - name: rubric_dimensions
+        description: "Rubric dimension data"
+      - name: schools
+        description: "School data"
+      - name: sections
+        description: "Section data"
+      - name: sessions
+        description: "Session data"
+      - name: staff_education_organization_assignment_associations
+        description: "Staff education organization assignment association data"
+      - name: staff_education_organization_contact_associations
+        description: "Staff education organization contact association data"
+      - name: staff_education_organization_employment_associations
+        description: "Staff education organization employment association data"
+      - name: staff_school_associations
+        description: "Staff school association data"
+      - name: staff_section_associations
+        description: "Staff section association data"
+      - name: staffs
+        description: "Staff data"
+      - name: state_education_agencies
+        description: "State education agency data"
+      - name: student_academic_records
+        description: "Student academic record data"
+      - name: student_assessments
+        description: "Student assessment data"
+      - name: student_cohort_associations
+        description: "Student cohort association data"
+      - name: student_contact_associations
+        description: "Student contact association data"
+      - name: student_cte_program_associations
+        description: "Student CTE program association data"
+      - name: student_discipline_incident_associations
+        description: "Student discipline incident association data"
+      - name: student_discipline_incident_behavior_associations
+        description: "Student discipline incident behavior association data"
+      - name: student_discipline_incident_non_offender_associations
+        description: "Student discipline incident non-offender association data"
+      - name: student_education_organization_associations
+        description: "Student education organization association data"
+      - name: student_education_organization_responsibility_associations
+        description: "Student education organization responsibility association data"
+      - name: student_homeless_program_associations
+        description: "Student homeless program association data"
+      - name: student_language_instruction_program_associations
+        description: "Student language instruction program association data"
+      - name: student_migrant_education_program_associations
+        description: "Student migrant education program association data"
+      - name: student_parent_associations
+        description: "Student parent association data"
+      - name: student_program_associations
+        description: "Student program association data"
+      - name: student_school_associations
+        description: "Student school association data"
+      - name: student_school_attendance_events
+        description: "Student school attendance event data"
+      - name: student_school_food_service_program_associations
+        description: "Student school food service program association data"
+      - name: student_section_associations
+        description: "Student section association data"
+      - name: student_section_attendance_events
+        description: "Student section attendance event data"
+      - name: student_special_education_program_associations
+        description: "Student special education program association data"
+      - name: student_title_i_part_a_program_associations
+        description: "Student Title I Part A program association data"
+      - name: students
+        description: "Student data"
+      - name: survey_question_responses
+        description: "Survey question response data"
+      - name: survey_questions
+        description: "Survey question data"
+      - name: survey_response_education_organization_target_associations
+        description: "Survey response education organization target association data"
+      - name: survey_response_person_target_associations
+        description: "Survey response person target association data"
+      - name: survey_responses
+        description: "Survey response data"
+      - name: survey_section_responses
+        description: "Survey section response data"
+      - name: survey_sections
+        description: "Survey section data"
+      - name: surveys
+        description: "Survey data"

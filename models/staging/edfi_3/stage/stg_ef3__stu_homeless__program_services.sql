@@ -14,14 +14,14 @@ flattened as (
 
         program_enroll_begin_date,
         program_enroll_end_date,
-        {{ extract_descriptor('value:homelessProgramServiceDescriptor::string') }} as program_service,
-        value:primaryIndicator::boolean as primary_indicator,
-        value:providers                 as v_providers,
-        value:serviceBeginDate::date    as service_begin_date,
-        value:serviceEndDate::date      as service_end_date,
+        {{ extract_descriptor(jget('value:homelessProgramServiceDescriptor::string')) }} as program_service,
+        {{ jget('value:primaryIndicator::boolean') }} as primary_indicator,
+        {{ jget('value:providers') }}                 as v_providers,
+        {{ jget('value:serviceBeginDate::date') }}    as service_begin_date,
+        {{ jget('value:serviceEndDate::date') }}      as service_end_date,
 
         -- edfi extensions
-        value:_ext as v_ext
+        {{ jget('value:_ext') }} as v_ext
 
     from stage_stu_programs
         {{ json_flatten('v_homeless_program_services') }}

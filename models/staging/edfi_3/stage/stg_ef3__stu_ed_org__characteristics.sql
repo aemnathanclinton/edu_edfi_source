@@ -10,13 +10,18 @@ flattened as (
         ed_org_id,
         k_lea,
         k_school,
-        {{ extract_descriptor('char.value:studentCharacteristicDescriptor::string') }} as student_characteristic,
-        char.value:designatedBy::string as designated_by,
-        timing.value:beginDate::date as begin_date,
-        timing.value:endDate::date as end_date
+        -- Extract student characteristic directly from JSON
+        substring(
+            try_cast(json_value(char.value, '$.studentCharacteristicDescriptor') as nvarchar(max)), 
+            charindex('#', try_cast(json_value(char.value, '$.studentCharacteristicDescriptor') as nvarchar(max))) + 1, 
+            len(try_cast(json_value(char.value, '$.studentCharacteristicDescriptor') as nvarchar(max)))
+        ) as student_characteristic,
+        json_value(char.value, '$.designatedBy') as designated_by,
+        -- For periods, use simplified approach - just get the first period if exists
+        cast(json_value(json_query(char.value, '$.periods[0]'), '$.beginDate') as date) as begin_date,
+        cast(json_value(json_query(char.value, '$.periods[0]'), '$.endDate') as date) as end_date
     from stage_stu_ed_org
         {{ json_flatten('v_student_characteristics', 'char', outer=True) }}
-        {{ json_flatten('char.value:periods', 'timing', outer=True) }}
 )
 select * from flattened
 

@@ -22,11 +22,11 @@ renamed as (
         -- references
         {{ jget("v:schoolReference") }}                         as school_reference,
         -- unflattened lists
-        {{ jget("v:classPeriods") }}                            as v_class_periods,
-        {{ jget("v:dates") }}                                   as v_dates,
-        {{ jget("v:gradeLevels") }}                             as v_grade_levels,
+        {{ jget("v:classPeriods::string") }}                            as v_class_periods,
+        {{ jget("v:dates::string") }}                                   as v_dates,
+        {{ jget("v:gradeLevels::string") }}                             as v_grade_levels,
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from bell_schedules
 )
 select * from renamed

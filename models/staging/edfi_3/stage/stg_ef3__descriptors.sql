@@ -1,3 +1,7 @@
+{{ config(
+    materialized='table'
+) }}
+
 with base_descriptors as (
     select * from {{ ref('base_ef3__descriptors') }}
 ),
@@ -23,4 +27,6 @@ deduped as (
 )
 select * from deduped
 where is_deleted = 0
+{% if target.type != 'sqlserver' %}
 order by tenant_code, api_year desc, descriptor_name, code_value
+{% endif %}

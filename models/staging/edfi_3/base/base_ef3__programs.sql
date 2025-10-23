@@ -22,14 +22,14 @@ renamed as (
         -- references
         {{ jget("v:educationOrganizationReference") }} as education_organization_reference,
         -- lists
-        {{ jget("v:characteristics") }}    as v_characteristics,
-        {{ jget("v:learningObjectives") }} as v_learning_objectives,
-        {{ jget("v:learningStandards") }}  as v_learning_standards,
-        {{ jget("v:services") }}           as v_services,
-        {{ jget("v:sponsors") }}           as v_sponsors,
+        {{ jget("v:characteristics::string") }}    as v_characteristics,
+        {{ jget("v:learningObjectives::string") }} as v_learning_objectives,
+        {{ jget("v:learningStandards::string") }}  as v_learning_standards,
+        {{ jget("v:services::string") }}           as v_services,
+        {{ jget("v:sponsors::string") }}           as v_sponsors,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from programs
 )
 select * from renamed

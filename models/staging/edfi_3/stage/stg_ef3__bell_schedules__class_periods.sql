@@ -8,8 +8,8 @@ flattened as (
         k_bell_schedule,
         k_school,
         {{ gen_skey('k_class_period', 'value:classPeriodReference') }},
-        value:classPeriodReference:classPeriodName::string as class_period_name,
-        value:classPeriodReference:schoolId::int           as class_period_school_id
+        {{ jget('value:classPeriodReference:classPeriodName::string') }} as class_period_name,
+        {{ jget('value:classPeriodReference:schoolId::int') }} as class_period_school_id
     from stg_bell_schedules
         {{ json_flatten('v_class_periods') }}
 )

@@ -11,9 +11,8 @@ flattened as (
         k_lea,
         k_school,
         {{ extract_descriptor('value:studentIdentificationSystemDescriptor::string') }} as id_system,
-        value:assigningOrganizationIdentificationCode::string as assigning_org,
-        value:identificationCode::string as id_code
-    from stage_stu_ed_org
+        {{ jget('value:assigningOrganizationIdentificationCode::string') }} as assigning_org,
+        {{ jget('value:identificationCode::string') }} as id_code from stage_stu_ed_org
         {{ json_flatten('v_student_identification_codes') }}
 )
 select * from flattened

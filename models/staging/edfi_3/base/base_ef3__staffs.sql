@@ -40,24 +40,24 @@ renamed as (
         -- references
         {{ jget("v:personReference") }}                 as person_reference,
         -- lists
-        {{ jget("v:addresses") }}                       as v_addresses,
-        {{ jget("v:ancestryEthnicOrigins") }}           as v_ancestry_ethnic_origins,
-        {{ jget("v:credentials") }}                     as v_credentials,
-        {{ jget("v:electronicMails") }}                 as v_electronic_mails,
-        {{ jget("v:identificationCodes") }}             as v_identification_codes,
-        {{ jget("v:identificationDocuments") }}         as v_identification_documents,
-        {{ jget("v:personalIdentificationDocuments") }} as v_personal_identification_documents,
-        {{ jget("v:internationalAddresses") }}          as v_international_addresses,
-        {{ jget("v:languages") }}                       as v_languages,
-        {{ jget("v:otherNames") }}                      as v_other_names,
-        {{ jget("v:races") }}                           as v_races,
-        {{ jget("v:recognitions") }}                    as v_recognitions,
-        {{ jget("v:telephones") }}                      as v_telephones,
-        {{ jget("v:tribalAffiliations") }}              as v_tribal_affiliations,
-        {{ jget("v:visas") }}                           as v_visas,
+        {{ jget("v:addresses::string") }}                       as v_addresses,
+        {{ jget("v:ancestryEthnicOrigins::string") }}           as v_ancestry_ethnic_origins,
+        {{ jget("v:credentials::string") }}                     as v_credentials,
+        {{ jget("v:electronicMails::string") }}                 as v_electronic_mails,
+        {{ jget("v:identificationCodes::string") }}             as v_identification_codes,
+        {{ jget("v:identificationDocuments::string") }}         as v_identification_documents,
+        {{ jget("v:personalIdentificationDocuments::string") }} as v_personal_identification_documents,
+        {{ jget("v:internationalAddresses::string") }}          as v_international_addresses,
+        {{ jget("v:languages::string") }}                       as v_languages,
+        {{ jget("v:otherNames::string") }}                      as v_other_names,
+        {{ jget("v:races::string") }}                           as v_races,
+        {{ jget("v:recognitions::string") }}                    as v_recognitions,
+        {{ jget("v:telephones::string") }}                      as v_telephones,
+        {{ jget("v:tribalAffiliations::string") }}              as v_tribal_affiliations,
+        {{ jget("v:visas::string") }}                           as v_visas,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from src_staffs
 )
 select * from renamed

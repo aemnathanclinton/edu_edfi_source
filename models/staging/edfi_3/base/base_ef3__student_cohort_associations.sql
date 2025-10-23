@@ -21,11 +21,11 @@ renamed as (
         -- references
         {{ jget("v:studentReference") }} as student_reference,
         {{ jget("v:cohortReference") }}  as cohort_reference,
-        -- lists 
-        {{ jget("v:sections") }} as v_sections,
+        -- lists
+        {{ jget("v:sections::string") }} as v_sections,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
 
     from stu_cohort_assoc
 )

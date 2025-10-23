@@ -26,9 +26,9 @@ renamed as (
         {{ extract_descriptor('v:reporterDescriptionDescriptor::string') }} as reporter_description,
         {{ extract_descriptor('v:incidentLocationDescriptor::string') }}    as incident_location,
         --lists
-        {{ jget('v:behaviors') }}            as v_behaviors,
-        {{ jget('v:externalParticipants') }} as v_external_participants,
-        {{ jget('v:weapons') }}              as v_weapons,
+        {{ jget('v:behaviors::string') }}            as v_behaviors,
+        {{ jget('v:externalParticipants::string') }} as v_external_participants,
+        {{ jget('v:weapons::string') }}              as v_weapons,
         --references
         {{ jget('v:schoolReference') }}      as school_reference,
         --deprecated
@@ -36,7 +36,7 @@ renamed as (
         {{ jget('v:staffReference:staffUniqueId::string') }} as staff_unique_id,
 
         -- edfi extensions
-        {{ jget('v:_ext') }} as v_ext
+        {{ jget('v:_ext::string') }} as v_ext
     from discipline_incident
 )
 select * from renamed

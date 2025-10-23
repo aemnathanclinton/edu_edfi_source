@@ -42,12 +42,12 @@ renamed as (
         {{ jget("v:studentReference") }}               as student_reference,
 
         -- lists
-        {{ jget("v:programParticipationStatuses") }}          as v_program_participation_statuses,
-        {{ jget("v:languageInstructionProgramServices") }}    as v_language_instruction_program_services,
-        {{ jget("v:englishLanguageProficiencyAssessments") }} as v_english_language_proficiency_assessments,
+        {{ jget("v:programParticipationStatuses::string") }}          as v_program_participation_statuses,
+        {{ jget("v:languageInstructionProgramServices::string") }}    as v_language_instruction_program_services,
+        {{ jget("v:englishLanguageProficiencyAssessments::string") }} as v_english_language_proficiency_assessments,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
 
     from source_stu_programs
 )

@@ -25,4 +25,6 @@ deduped as (
 )
 select * from deduped
 where is_deleted = 0
+{% if target.type != 'sqlserver' %}
 order by tenant_code, api_year desc, school_id, bell_schedule_name
+{% endif %}

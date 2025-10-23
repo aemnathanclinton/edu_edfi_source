@@ -36,13 +36,13 @@ renamed as (
         {{ jget("v:studentReference") }}            as student_reference,
         {{ jget("v:schoolYearTypeReference") }}     as school_year_type_reference,
         -- unflattened lists
-        {{ jget("v:scoreResults") }}                as v_score_results,
-        {{ jget("v:performanceLevels") }}           as v_performance_levels,
-        {{ jget("v:items") }}                       as v_items,
-        {{ jget("v:studentObjectiveAssessments") }} as v_student_objective_assessments,
-        {{ jget("v:accommodations") }}              as v_accommodations,
+        {{ jget("v:scoreResults::string") }}                as v_score_results,
+        {{ jget("v:performanceLevels::string") }}           as v_performance_levels,
+        {{ jget("v:items::string") }}                       as v_items,
+        {{ jget("v:studentObjectiveAssessments::string") }} as v_student_objective_assessments,
+        {{ jget("v:accommodations::string") }}              as v_accommodations,
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from student_assessments
 )
 select * from renamed

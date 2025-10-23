@@ -39,13 +39,13 @@ renamed as (
         {{ jget("v:studentReference") }}                                                              as student_reference,
 
         -- lists
-        {{ jget("v:cteProgramServices") }}                                                            as v_cte_program_services, 
-        {{ jget("v:ctePrograms") }}                                                                   as v_cte_programs, 
-        {{ jget("v:programParticipationStatuses") }}                                                  as v_program_participation_statuses, 
-        {{ jget("v:services") }}                                                                      as v_services,
+        {{ jget("v:cteProgramServices::string") }}                                                            as v_cte_program_services, 
+        {{ jget("v:ctePrograms::string") }}                                                                   as v_cte_programs, 
+        {{ jget("v:programParticipationStatuses::string") }}                                                  as v_program_participation_statuses, 
+        {{ jget("v:services::string") }}                                                                      as v_services,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
         
     from source_stu_programs
 )

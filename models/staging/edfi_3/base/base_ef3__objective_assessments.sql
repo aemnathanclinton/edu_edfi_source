@@ -26,13 +26,13 @@ renamed as (
         {{ jget('v:assessmentReference') }}                as assessment_reference,
         {{ jget('v:parentObjectiveAssessmentReference') }} as parent_objective_assessment_reference,
         -- unflattened lists
-        {{ jget('v:assessmentItems') }}    as v_assessment_items,
-        {{ jget('v:learningObjectives') }} as v_learning_objectives,
-        {{ jget('v:learningStandards') }}  as v_learning_standards,
-        {{ jget('v:performanceLevels') }}  as v_performance_levels,
-        {{ jget('v:scores') }}             as v_scores,
+        {{ jget('v:assessmentItems::string') }}    as v_assessment_items,
+        {{ jget('v:learningObjectives::string') }} as v_learning_objectives,
+        {{ jget('v:learningStandards::string') }}  as v_learning_standards,
+        {{ jget('v:performanceLevels::string') }}  as v_performance_levels,
+        {{ jget('v:scores::string') }}             as v_scores,
         -- edfi extensions
-        {{ jget('v:_ext') }}               as v_ext
+        {{ jget('v:_ext::string') }}               as v_ext
     from objective_assessments
 )
 select * from renamed

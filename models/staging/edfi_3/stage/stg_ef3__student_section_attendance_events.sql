@@ -19,7 +19,7 @@ keyed as (
         {{ gen_skey('k_student') }},
         {{ gen_skey('k_student_xyear') }},
         {{ gen_skey('k_course_section') }},
-        base_student_section_attend.*
+        {{ star(from=ref('base_ef3__student_section_attendance_events')) }}
         {{ extract_extension(model_name=this.name, flatten=True) }}
     from base_student_section_attend
 ),

@@ -26,14 +26,17 @@ deduped_within_year as (
     }}
 ),
 -- .. then remove deletes as they shouldn't be used in x-year dedupe
-deduped_within_year_no_deletes as (
-    select * from deduped_within_year where is_deleted = 0
+-- Remove __rn column to avoid conflict with second deduplicate call
+cleaned_deduped_within_year as (
+    select {{ star(from=ref('base_ef3__education_organization_networks')) }}, k_network
+    from deduped_within_year 
+    where is_deleted = 0
 ),
 -- .. and then dedupe across years to enforce the correct grain, keeping latest year that wasn't deleted
 deduped_across_years as (
     {{
         dbt_utils.deduplicate(
-            relation='deduped_within_year_no_deletes',
+            relation='cleaned_deduped_within_year',
             partition_by='k_network',
             order_by='api_year desc'
         )

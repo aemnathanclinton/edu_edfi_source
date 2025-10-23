@@ -7,8 +7,8 @@ flattened as (
         api_year,
         k_staff,
         {{ extract_descriptor('value:staffIdentificationSystemDescriptor::string') }} as id_system,
-        value:assigningOrganizationIdentificationCode::string as assigning_org,
-        value:identificationCode::string as id_code
+        {{ jget('value:assigningOrganizationIdentificationCode::string') }} as assigning_org,
+        {{ jget('value:identificationCode::string') }} as id_code
     from stage_staffs
         {{ json_flatten('v_identification_codes') }}
 )

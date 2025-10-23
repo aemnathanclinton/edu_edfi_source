@@ -9,8 +9,8 @@ keyed as (
         -- note: neither school_year nor the calendar association are required,
         -- which means this table almost never contains year data, so we have to 
         -- add it back in where possible
-        coalesce(school_year, api_year) as school_year,
-        {{ dbt_utils.star(from=ref('base_ef3__staff_school_associations'), except=['school_year']) }}
+        coalesce(cast(school_year as varchar(10)), cast(api_year as varchar(10))) as school_year,
+        {{ star(from=ref('base_ef3__staff_school_associations'), except=['school_year']) }}
         {{ extract_extension(model_name=this.name, flatten=True) }}
     from base_staff_school_assoc
 

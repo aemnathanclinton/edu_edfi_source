@@ -32,7 +32,7 @@ renamed as (
         {{ jget("v:employmentStaffEducationOrganizationEmploymentAssociationReference") }} as staff_ed_org_employment_reference,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from staff_ed_org_assign
 )
 select * from renamed

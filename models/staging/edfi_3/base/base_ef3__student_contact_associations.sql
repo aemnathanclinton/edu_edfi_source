@@ -26,7 +26,7 @@ renamed as (
         {{ jget("v:studentReference") }}                                       as student_reference,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from student_contact_associations
 )
 select * from renamed

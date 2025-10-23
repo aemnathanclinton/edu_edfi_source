@@ -19,10 +19,14 @@ keyed as (
 -- we need to first dedupe within year using last_modified_timestamp, then dedupe across years to get to a single record 
 deduped_within_year as (
     {{
-        dbt_utils.deduplicate(
+        safe_deduplicate(
             relation='keyed',
             partition_by='k_parent, api_year',
-            order_by='last_modified_timestamp desc, pull_timestamp desc'
+            order_by='last_modified_timestamp desc, pull_timestamp desc',
+            from_relation='base_ef3__parents',
+            additional_columns=['k_parent'],
+            row_number_column='__rn_within_year',
+            alias_suffix='within_year'
         )
     }}
 ),
@@ -33,10 +37,14 @@ deduped_within_year_no_deletes as (
 -- .. and then dedupe across years to enforce the correct grain, keeping latest year that wasn't deleted
 deduped_across_years as (
     {{
-        dbt_utils.deduplicate(
+        safe_deduplicate(
             relation='deduped_within_year_no_deletes',
             partition_by='k_parent',
-            order_by='api_year desc'
+            order_by='api_year desc',
+            from_relation='base_ef3__parents',
+            additional_columns=['k_parent'],
+            row_number_column='__rn_across_years',
+            alias_suffix='across_years'
         )
     }}
 )

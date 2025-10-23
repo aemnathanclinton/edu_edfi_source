@@ -34,4 +34,6 @@ select * from deduped
 {% if not is_incremental() %}
 where is_deleted = 0
 {% endif %}
+{% if target.type != 'sqlserver' %}
 order by tenant_code, school_year desc, student_unique_id
+{% endif %}

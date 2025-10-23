@@ -22,7 +22,7 @@ flattened as (
         {{ jget('value:issuerName::string') }} as issuer_name,
         {{ jget('value:issuerOriginURL::string') }} as issuer_origin_url,
         -- edfi extensions
-        {{ jget('value:_ext') }} as v_ext
+        {{ jget('value:_ext::string') }} as v_ext
     from stg_academic_records
         {{ json_flatten('v_diplomas') }}
 ),

@@ -1,3 +1,7 @@
+{{ config(
+    materialized='table'
+) }}
+
 with base_grading_periods as (
     select * from {{ ref('base_ef3__grading_periods') }}
 ),
@@ -40,4 +44,6 @@ deduped as (
 )
 select * from deduped
 where is_deleted = 0
+{% if target.type != 'sqlserver' %}
 order by tenant_code, school_year desc, period_sequence
+{% endif %}

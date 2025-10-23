@@ -23,10 +23,10 @@ renamed as (
         -- references
         {{ jget('v:educationOrganizationReference') }} as education_organization_reference,
         -- lists
-        {{ jget('v:programs') }} as v_programs,
+        {{ jget('v:programs::string') }} as v_programs,
         
         -- edfi extensions
-        {{ jget('v:_ext') }} as v_ext
+        {{ jget('v:_ext::string') }} as v_ext
     from cohorts
 )
 select * from renamed

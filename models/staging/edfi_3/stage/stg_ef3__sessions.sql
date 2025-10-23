@@ -1,3 +1,7 @@
+{{ config(
+    materialized='table'
+) }}
+
 with base_sessions as (
     select * from {{ ref('base_ef3__sessions') }}
 ),
@@ -27,4 +31,7 @@ deduped as (
 )
 select * from deduped
 where is_deleted = 0
+{% if target.type != 'sqlserver' %}
 order by tenant_code, school_year desc, school_id
+{% endif %}
+

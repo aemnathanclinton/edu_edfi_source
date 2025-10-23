@@ -7,9 +7,9 @@ flattened as (
         api_year,
         k_survey,
         k_survey_question,
-        value:sortOrder::int      as sort_order,
-        value:numericValue::float as numeric_value,
-        value:textValue::string   as text_value
+        {{ jget('value:sortOrder::int') }} as sort_order,
+        {{ jget('value:numericValue::float') }} as numeric_value,
+        {{ jget('value:textValue::string') }} as text_value
     from stg_survey_questions
         {{ json_flatten('v_response_choices') }}
 )

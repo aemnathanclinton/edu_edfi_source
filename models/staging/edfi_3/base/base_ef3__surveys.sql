@@ -30,7 +30,7 @@ renamed as (
         {{ jget("v:schoolYearTypeReference") }}        as school_year_reference,
         {{ jget("v:sessionReference") }}               as session_reference,
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from surveys
 )
 select * from renamed

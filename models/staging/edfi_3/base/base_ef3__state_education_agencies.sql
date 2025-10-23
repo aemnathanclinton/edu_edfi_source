@@ -21,17 +21,17 @@ renamed as (
         -- descriptors
         {{ extract_descriptor('v:operationalStatusDescriptor::string') }} as operational_status,
         -- lists
-        {{ jget("v:accountabilities") }}       as v_accountabilities,
-        {{ jget("v:addresses") }}              as v_addresses,
-        {{ jget("v:categories") }}             as v_categories,
-        {{ jget("v:federalFunds") }}           as v_federal_funds,
-        {{ jget("v:identificationCodes") }}    as v_identification_codes,
-        {{ jget("v:indicators") }}             as v_indicators,
-        {{ jget("v:institutionTelephones") }}  as v_institution_telephones,
-        {{ jget("v:internationalAddresses") }} as v_international_addresses,
+        {{ jget("v:accountabilities::string") }}       as v_accountabilities,
+        {{ jget("v:addresses::string") }}              as v_addresses,
+        {{ jget("v:categories::string") }}             as v_categories,
+        {{ jget("v:federalFunds::string") }}           as v_federal_funds,
+        {{ jget("v:identificationCodes::string") }}    as v_identification_codes,
+        {{ jget("v:indicators::string") }}             as v_indicators,
+        {{ jget("v:institutionTelephones::string") }}  as v_institution_telephones,
+        {{ jget("v:internationalAddresses::string") }} as v_international_addresses,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from seas
 ) 
 select * from renamed

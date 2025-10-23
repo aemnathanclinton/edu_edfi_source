@@ -13,14 +13,12 @@ flattened as (
         k_school,
 
         {{ extract_descriptor('value:serviceDescriptor::string') }} as service,
-        value:primaryIndicator::boolean as primary_indicator,
-        value:serviceBeginDate::date    as service_begin_date,
-        value:serviceEndDate::date      as service_end_date,
+        {{ jget('value:primaryIndicator::boolean') }} as primary_indicator,
+        {{ jget('value:serviceBeginDate::date') }} as service_begin_date,
+        {{ jget('value:serviceEndDate::date') }} as service_end_date,
 
         -- edfi extensions
-        value:_ext as v_ext
-
-    from stage_stu_programs
+        {{ jget('value:_ext::string') }} as v_ext from stage_stu_programs
         {{ json_flatten('v_services') }}
 )
 

@@ -11,7 +11,7 @@ flattened as (
         {{ jget('value:isCumulative::boolean') }} as is_cumulative,
         {{ jget('value:maxGradePointAverageValue::float') }}  as max_gpa_value,
         -- edfi extensions
-        {{ jget('value:_ext') }} as v_ext 
+        {{ jget('value:_ext::string') }} as v_ext
     from stg_academic_records
         {{ json_flatten('v_grade_point_averages') }}
 ),

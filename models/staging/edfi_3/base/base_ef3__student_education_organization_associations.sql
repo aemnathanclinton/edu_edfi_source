@@ -31,23 +31,23 @@ renamed as (
         {{ jget("v:studentReference") }}               as student_reference,
         {{ jget("v:educationOrganizationReference") }} as education_organization_reference,
         -- lists
-        {{ jget("v:addresses") }}                  as v_addresses,
-        {{ jget("v:ancestryEthnicOrigins") }}      as v_ancestry_ethnic_origins,
-        {{ jget("v:cohortYears") }}                as v_cohort_years,
-        {{ jget("v:disabilities") }}               as v_disabilities,
-        {{ jget("v:electronicMails") }}            as v_electronic_mails,
-        {{ jget("v:internationalAddresses") }}     as v_international_addresses,
-        {{ jget("v:languages") }}                  as v_languages,
-        {{ jget("v:programParticipations") }}      as v_program_participations, -- deprecated
-        {{ jget("v:races") }}                      as v_races,
-        {{ jget("v:studentCharacteristics") }}     as v_student_characteristics,
-        {{ jget("v:studentIdentificationCodes") }} as v_student_identification_codes,
-        {{ jget("v:studentIndicators") }}          as v_student_indicators,
-        {{ jget("v:telephones") }}                 as v_telephones,
-        {{ jget("v:tribalAffiliations") }}         as v_tribal_affiliations,
+        {{ jget("v:addresses::string") }}                  as v_addresses,
+        {{ jget("v:ancestryEthnicOrigins::string") }}      as v_ancestry_ethnic_origins,
+        {{ jget("v:cohortYears::string") }}                as v_cohort_years,
+        {{ jget("v:disabilities::string") }}               as v_disabilities,
+        {{ jget("v:electronicMails::string") }}            as v_electronic_mails,
+        {{ jget("v:internationalAddresses::string") }}     as v_international_addresses,
+        {{ jget("v:languages::string") }}                  as v_languages,
+        {{ jget("v:programParticipations::string") }}      as v_program_participations, -- deprecated
+        {{ jget("v:races::string") }}                      as v_races,
+        {{ jget("v:studentCharacteristics::string") }}     as v_student_characteristics,
+        {{ jget("v:studentIdentificationCodes::string") }} as v_student_identification_codes,
+        {{ jget("v:studentIndicators::string") }}          as v_student_indicators,
+        {{ jget("v:telephones::string") }}                 as v_telephones,
+        {{ jget("v:tribalAffiliations::string") }}         as v_tribal_affiliations,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from stu_ed_org
 )
 select * from renamed

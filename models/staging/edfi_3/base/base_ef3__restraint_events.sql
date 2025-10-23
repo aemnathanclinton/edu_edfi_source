@@ -23,11 +23,11 @@ renamed as (
         {{ jget("v:schoolReference") }}  as school_reference,
         {{ jget("v:studentReference") }} as student_reference,
         -- lists
-        {{ jget("v:programs") }}         as v_programs,
-        {{ jget("v:reasons") }}          as v_reasons,
+        {{ jget("v:programs::string") }}         as v_programs,
+        {{ jget("v:reasons::string") }}          as v_reasons,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from restraint_events
 )
 select * from renamed

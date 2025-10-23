@@ -21,7 +21,7 @@ renamed as (
         {{ jget('v:educationOrganizationNetworkReference') }} as network_reference,
         {{ jget('v:memberEducationOrganizationReference') }}  as education_organization_reference,
         -- edfi extensions
-        {{ jget('v:_ext') }} as v_ext
+        {{ jget('v:_ext::string') }} as v_ext
 
     from network_associations
 )

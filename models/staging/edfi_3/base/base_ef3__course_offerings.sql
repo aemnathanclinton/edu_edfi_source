@@ -25,12 +25,12 @@ renamed as (
         {{ jget('v:courseReference') }}  as course_reference,
         {{ jget('v:schoolReference') }}  as school_reference,
         {{ jget('v:sessionReference') }} as session_reference,
-        {{ jget('v:courseLevelCharacteristics') }} as v_course_level_characteristics,
-        {{ jget('v:curriculumUseds') }}            as v_curriculum_used,
-        {{ jget('v:offeredGradeLevels') }}         as v_offered_grade_levels,
+        {{ jget('v:courseLevelCharacteristics::string') }} as v_course_level_characteristics,
+        {{ jget('v:curriculumUseds::string') }}            as v_curriculum_used,
+        {{ jget('v:offeredGradeLevels::string') }}         as v_offered_grade_levels,
 
         -- edfi extensions
-        {{ jget('v:_ext') }} as v_ext
+        {{ jget('v:_ext::string') }} as v_ext
     from course_offerings
 )
 select * from renamed

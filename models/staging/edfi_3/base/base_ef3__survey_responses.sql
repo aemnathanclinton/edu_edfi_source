@@ -29,9 +29,9 @@ renamed as (
         {{ jget("v:staffReference") }}                                as staff_reference,
         coalesce({{ jget("v:parentReference") }}, {{ jget("v:contactReference") }}) as contact_reference, -- parentReference renamed to contactReference in Data Standard v5.0
         -- lists
-        {{ jget("v:surveyLevels") }}  as v_survey_levels,    
+        {{ jget("v:surveyLevels::string") }}  as v_survey_levels,    
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from survey_responses
 )
 select * from renamed

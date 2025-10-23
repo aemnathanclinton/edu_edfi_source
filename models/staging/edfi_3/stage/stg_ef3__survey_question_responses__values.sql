@@ -8,9 +8,9 @@ flattened as (
         k_survey,
         k_survey_question,
         k_survey_response,
-        value:surveyQuestionResponseValueIdentifier::float as question_response_value_id,
-        value:numericResponse::float  as numeric_response,
-        value:textResponse::string    as text_response
+        {{ jget('value:surveyQuestionResponseValueIdentifier::float') }} as question_response_value_id,
+        {{ jget('value:numericResponse::float') }}  as numeric_response,
+        {{ jget('value:textResponse::string') }}    as text_response
     from stg_survey_question_responses
         {{ json_flatten('v_values') }}
 )

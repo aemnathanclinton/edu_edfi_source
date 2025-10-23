@@ -25,12 +25,12 @@ renamed as (
         {{ jget("v:calendarReference") }} as calendar_reference,
         {{ jget("v:schoolReference") }}   as school_reference,
         {{ jget("v:staffReference") }}    as staff_reference,
-        -- lists 
-        {{ jget("v:academicSubjects") }} as v_academic_subjects,
-        {{ jget("v:gradeLevels") }}       as v_grade_levels,
+        -- lists
+        {{ jget("v:academicSubjects::string") }} as v_academic_subjects,
+        {{ jget("v:gradeLevels::string") }}       as v_grade_levels,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from staff_school
 )
 select * from renamed

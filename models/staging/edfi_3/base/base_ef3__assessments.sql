@@ -37,20 +37,20 @@ renamed as (
         --references
         {{ jget("v:educationOrganizationReference") }} as education_organization_reference,
         -- unflattened lists
-        {{ jget("v:academicSubjects") }}    as v_academic_subjects,
-        {{ jget("v:assessedGradeLevels") }} as v_assessed_grade_levels,
-        {{ jget("v:performanceLevels") }}   as v_performance_levels,
-        {{ jget("v:scores") }}              as v_scores,
-        {{ jget("v:identificationCodes") }} as v_identification_codes,
-        {{ jget("v:languages") }}           as v_languages,
-        {{ jget("v:platformTypes") }}       as v_platform_types,
-        {{ jget("v:programs") }}            as v_programs,
-        {{ jget("v:sections") }}            as v_sections,
-        {{ jget("v:authors") }}             as v_authors,
+        {{ jget("v:academicSubjects::string") }}    as v_academic_subjects,
+        {{ jget("v:assessedGradeLevels::string") }} as v_assessed_grade_levels,
+        {{ jget("v:performanceLevels::string") }}   as v_performance_levels,
+        {{ jget("v:scores::string") }}              as v_scores,
+        {{ jget("v:identificationCodes::string") }} as v_identification_codes,
+        {{ jget("v:languages::string") }}           as v_languages,
+        {{ jget("v:platformTypes::string") }}       as v_platform_types,
+        {{ jget("v:programs::string") }}            as v_programs,
+        {{ jget("v:sections::string") }}            as v_sections,
+        {{ jget("v:authors::string") }}             as v_authors,
         -- unused
-        {{ jget("v:contentStandard") }}     as v_content_standard,
+        {{ jget("v:contentStandard::string") }}     as v_content_standard,
         -- edfi extensions
-        {{ jget("v:_ext") }}                as v_ext
+        {{ jget("v:_ext::string") }}                as v_ext
     from assessments
 )
 select * from renamed

@@ -11,9 +11,9 @@ flattened as (
         {{key}},
         {% endfor -%}
         {{ edu_edfi_source.extract_descriptor('value:electronicMailTypeDescriptor::string') }} as email_type,
-        lower(value:electronicMailAddress::string)                             as email_address,
-        value:primaryEmailAddressIndicator::boolean                            as is_primary_email,
-        value:doNotPublishIndicator::boolean                                   as do_not_publish
+        lower({{ jget('value:electronicMailAddress::string') }}) as email_address,
+        {{ jget('value:primaryEmailAddressIndicator::boolean') }} as is_primary_email,
+        {{ jget('value:doNotPublishIndicator::boolean') }} as do_not_publish
     from stg
         {{ edu_edfi_source.json_flatten('v_electronic_mails') }}
 )
@@ -33,10 +33,10 @@ flattened as (
         {{key}},
         {% endfor -%}
         {{ edu_edfi_source.extract_descriptor('value:telephoneNumberTypeDescriptor::string') }} as phone_number_type,
-        value:telephoneNumber::string                                           as phone_number,
-        value:orderOfPriority::int                                              as priority_order,
-        value:doNotPublishIndicator::boolean                                    as do_not_publish,
-        value:textMessageCapabilityIndicator::boolean                           as is_text_message_capable
+        {{ jget('value:telephoneNumber::string') }} as phone_number,
+        {{ jget('value:orderOfPriority::int') }} as priority_order,
+        {{ jget('value:doNotPublishIndicator::boolean') }} as do_not_publish,
+        {{ jget('value:textMessageCapabilityIndicator::boolean') }} as is_text_message_capable
     from stg
         {{ edu_edfi_source.json_flatten('v_telephones') }}
 )
@@ -56,30 +56,34 @@ flattened as (
         {{key}},
         {% endfor -%}
         {{ edu_edfi_source.extract_descriptor('addr.value:addressTypeDescriptor::string') }} as address_type,
-        addr.value:streetNumberName::string as street_address,
-        addr.value:apartmentRoomSuiteNumber::string as apartment_room_suite_number,
-        addr.value:city::string as city,
-        addr.value:nameOfCounty::string name_of_county,
+        {{ jget('addr.value:streetNumberName') }} as street_address,
+        {{ jget('addr.value:apartmentRoomSuiteNumber') }} as apartment_room_suite_number,
+        {{ jget('addr.value:city') }} as city,
+        {{ jget('addr.value:nameOfCounty') }} as name_of_county,
         {{ edu_edfi_source.extract_descriptor('addr.value:stateAbbreviationDescriptor::string') }} as state_code,
-        addr.value:postalCode::string as postal_code,
-        addr.value:buildingSiteNumber::string as building_site_number,
+        {{ jget('addr.value:postalCode::string') }} as postal_code,
+        {{ jget('addr.value:buildingSiteNumber::string') }} as building_site_number,
         {{ edu_edfi_source.extract_descriptor('addr.value:localeDescriptor::string') }} as locale,
-        addr.value:congressionalDistrict::string as congressional_district,
-        addr.value:countyFIPSCode::string as county_fips_code,
-        addr.value:doNotPublishIndicator::boolean as do_not_publish,
-        addr.value:latitude::string as latitude,
-        addr.value:longitude::string as longitude,
-        timing.value:beginDate::date as address_begin_date,
-        timing.value:endDate::date as address_end_date
+        {{ jget('addr.value:congressionalDistrict::string') }} as congressional_district,
+        {{ jget('addr.value:countyFIPSCode::string') }} as county_fips_code,
+        {{ jget('addr.value:doNotPublishIndicator::boolean') }} as do_not_publish,
+        {{ jget('addr.value:latitude::string') }} as latitude,
+        {{ jget('addr.value:longitude::string') }} as longitude,
+        {{ jget('timing.value:beginDate::date') }} as address_begin_date,
+        {{ jget('timing.value:endDate::date') }} as address_end_date
     from stg
         {{ edu_edfi_source.json_flatten('v_addresses', 'addr') }}
-        {{ edu_edfi_source.json_flatten('addr.value:periods', 'timing', outer=True) }}
+            {{ edu_edfi_source.json_flatten(jget('addr.value:periods::array'), 'timing', outer=True) }}
 ),
 full_address as (
     select *,
         concat(
             street_address, ', ',
-            ifnull(apartment_room_suite_number, ''),
+            {% if target.type == 'sqlserver' %}
+            isnull(apartment_room_suite_number, '')
+            {% else %}
+            coalesce(apartment_room_suite_number, '')
+            {% endif %},
             case
                 when apartment_room_suite_number is null
                     then ''

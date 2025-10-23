@@ -1,3 +1,5 @@
+{{ config(materialized='table') }}
+
 with base_stu_assessments as (
     select * from {{ ref('base_ef3__student_assessments') }}
 ),

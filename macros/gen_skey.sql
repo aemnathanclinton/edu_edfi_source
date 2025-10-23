@@ -361,16 +361,28 @@
 
     {# handle cases where skey is different depending on the data standard version (need a case when to apply different rules by row) #}
     {% if skey_def['diff_by_data_standard'] %}
+        {#- handle SQL Server JSON paths properly for reference checks -#}
+        {% if target.type == 'sqlserver' and ':' in skey_ref %}
+            {% set ref_check = edu_edfi_source.jget("'" + skey_ref + "::string'") + ' is not null' %}
+        {% else %}
+            {% set ref_check = skey_ref + ' is null' %}
+        {% endif %}
         cast((case
-          when {{ skey_ref }} is null then null
+          when {{ ref_check }} then null
         {% for ds_version in skey_def['ds_specific_col_lists'] %}
             when data_model_version {{ ds_version }}
                 then {{ dbt_utils.generate_surrogate_key(edu_edfi_source.gen_key_list(skey_def, skey_ref, skey_def['ds_specific_col_lists'][ds_version], extras=extras)) }} 
         {% endfor %}
         end) as varchar(32)) as {{ alt_k_name or k_name }}
     {% else %}
+        {#- handle SQL Server JSON paths properly for reference checks -#}
+        {% if target.type == 'sqlserver' and ':' in skey_ref %}
+            {% set ref_check = edu_edfi_source.jget("'" + skey_ref + "::string'") + ' is not null' %}
+        {% else %}
+            {% set ref_check = skey_ref + ' is not null' %}
+        {% endif %}
         cast((case
-            when {{ skey_ref }} is not null then 
+            when {{ ref_check }} then 
                 {{ dbt_utils.generate_surrogate_key(edu_edfi_source.gen_key_list(skey_def, skey_ref, skey_vars, extras=extras)) }}
             else null
         end) as varchar(32)) as {{ alt_k_name or k_name }}
@@ -411,7 +423,12 @@
             {% endif %}
 
             {#- hack: wrap in lower to deal with case insensitive collations -#}
-            {% set concatted_keys = 'lower(' + concatted_keys + ')' %}
+            {#- handle SQL Server JSON paths properly -#}
+            {% if target.type == 'sqlserver' and ':' in concatted_keys %}
+                {% set concatted_keys = 'lower(' + edu_edfi_source.jget("'" + concatted_keys + "::string'") + ')' %}
+            {% else %}
+                {% set concatted_keys = 'lower(' + concatted_keys + ')' %}
+            {% endif %}
 
             {#- grow the output object with the new key -#}
             {% do output.append(concatted_keys) %}

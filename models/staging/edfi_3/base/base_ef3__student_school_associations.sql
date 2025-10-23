@@ -45,11 +45,11 @@ renamed as (
         {{ jget("v:studentReference") }}        as student_reference,
         {{ jget("v:graduationPlanReference") }} as graduation_plan_reference,
         -- lists
-        {{ jget("v:alternativeGraduationPlans") }} as v_alternative_graduation_plans,
-        {{ jget("v:educationPlans") }}             as v_education_plans,
+        {{ jget("v:alternativeGraduationPlans::string") }} as v_alternative_graduation_plans,
+        {{ jget("v:educationPlans::string") }}             as v_education_plans,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from stu_school_assoc
 )
 select * from renamed

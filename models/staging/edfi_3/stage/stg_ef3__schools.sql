@@ -45,13 +45,21 @@ deduped_within_year_no_deletes as (
 
 ),
 -- .. and then dedupe across years to enforce the correct grain, keeping latest year that wasn't deleted
+deduped_across_years_raw as (
+    select
+        *,
+        row_number() over (
+            partition by k_school
+            order by api_year desc
+        ) as __rn_final
+    from deduped_within_year_no_deletes
+),
+
 deduped_across_years as (
-    {{
-        dbt_utils.deduplicate(
-            relation='deduped_within_year_no_deletes',
-            partition_by='k_school',
-            order_by='api_year desc'
-        )
-    }}
+    select {{ star(from=ref('base_ef3__schools'), except=["__rn", "__rn_final"]) }},
+           k_school,
+           k_lea
+    from deduped_across_years_raw
+    where __rn_final = 1
 )
 select * from deduped_across_years

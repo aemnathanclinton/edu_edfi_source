@@ -36,16 +36,16 @@ renamed as (
         -- references
         {{ jget("v:educationOrganizationReference") }} as education_organization_reference,
         -- unflattened lists
-        {{ jget("v:identificationCodes") }}  as v_identification_codes,
-        {{ jget("v:competencyLevels") }}     as v_competency_levels,
-        {{ jget("v:learningObjectives") }}   as v_learning_objectives,
-        {{ jget("v:learningStandards") }}    as v_learning_standards,
-        {{ jget("v:levelCharacteristics") }} as v_level_characteristics,
-        {{ jget("v:offeredGradeLevels") }}   as v_offered_grade_levels,
-        {{ jget("v:academicSubjects") }}     as v_academic_subjects,
+        {{ jget("v:identificationCodes::string") }}  as v_identification_codes,
+        {{ jget("v:competencyLevels::string") }}     as v_competency_levels,
+        {{ jget("v:learningObjectives::string") }}   as v_learning_objectives,
+        {{ jget("v:learningStandards::string") }}    as v_learning_standards,
+        {{ jget("v:levelCharacteristics::string") }} as v_level_characteristics,
+        {{ jget("v:offeredGradeLevels::string") }}   as v_offered_grade_levels,
+        {{ jget("v:academicSubjects::string") }}     as v_academic_subjects,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from courses
 )
 select * from renamed

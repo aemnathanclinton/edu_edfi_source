@@ -24,10 +24,10 @@ renamed as (
         {{ jget("v:surveyQuestionReference") }}   as survey_question_reference,
         {{ jget("v:surveyResponseReference") }}   as survey_response_reference,
         -- lists
-        {{ jget("v:surveyQuestionMatrixElementResponses") }}  as v_survey_question_matrix_element_responses,
-        {{ jget("v:values") }}                                as v_values,
+        {{ jget("v:surveyQuestionMatrixElementResponses::string") }}  as v_survey_question_matrix_element_responses,
+        {{ jget("v:values::string") }}                                as v_values,
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from survey_question_responses
 )
 select * from renamed

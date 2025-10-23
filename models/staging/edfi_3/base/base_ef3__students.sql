@@ -33,13 +33,13 @@ renamed as (
         {{ extract_descriptor('v:birthStateAbbreviationDescriptor::string') }}       as birth_state,
         {{ extract_descriptor('v:birthCountryDescriptor::string') }}                 as birth_country,
         -- nested lists
-        {{ jget("v:identificationDocuments") }}         as v_identification_documents,
-        {{ jget("v:otherNames") }}                      as v_other_names,
-        {{ jget("v:personalIdentificationDocuments") }} as v_personal_identification_documents,
-        {{ jget("v:visas") }}                           as v_visas,
+        {{ jget("v:identificationDocuments::string") }}         as v_identification_documents,
+        {{ jget("v:otherNames::string") }}                      as v_other_names,
+        {{ jget("v:personalIdentificationDocuments::string") }} as v_personal_identification_documents,
+        {{ jget("v:visas::string") }}                           as v_visas,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from students
 )
 select * from renamed

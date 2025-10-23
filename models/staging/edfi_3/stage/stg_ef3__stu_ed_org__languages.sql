@@ -10,10 +10,10 @@ flattened as (
         ed_org_id,
         k_lea,
         k_school,
-        {{ extract_descriptor('lang_uses.value:languageUseDescriptor::string') }} as language_use,
-        {{ extract_descriptor('lang.value:languageDescriptor::string') }} as code_value
+        {{ extract_descriptor(jget('lang_uses.value:languageUseDescriptor::string')) }} as language_use,
+        {{ extract_descriptor(jget('lang.value:languageDescriptor::string')) }} as code_value 
     from stg_stu_ed_org
         {{ json_flatten('v_languages', 'lang') }}
-        {{ json_flatten('lang.value:uses', 'lang_uses') }}
+        {{ json_flatten('json_value(lang.value, \'$.uses\')', 'lang_uses') }}
 )
 select * from flattened

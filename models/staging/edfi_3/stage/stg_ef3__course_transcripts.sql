@@ -21,25 +21,33 @@ keyed as (
 ),
 first_deduped as (
     {{
-        dbt_utils.deduplicate(
+        safe_deduplicate(
             relation='keyed',
             partition_by='k_course, k_student_academic_record, course_attempt_result',
-            order_by='api_year desc, last_modified_timestamp desc, pull_timestamp desc'
+            order_by='api_year desc, last_modified_timestamp desc, pull_timestamp desc',
+            from_relation='base_ef3__course_transcripts',
+            additional_columns=['k_course', 'k_student_academic_record'],
+            row_number_column='__rn_first',
+            alias_suffix='first'
         )
-    }}      
+    }}
 ),
 no_deletes as (
     select * from first_deduped
     {% if not is_incremental() %}
-    where not is_deleted
+    where is_deleted = 0
     {% endif %}
 ),
 final_deduped as (
     {{
-        dbt_utils.deduplicate(
+        safe_deduplicate(
             relation='no_deletes',
             partition_by='course_code, course_ed_org_id, k_student_academic_record, course_attempt_result',
-            order_by='api_year desc, last_modified_timestamp desc, pull_timestamp desc'
+            order_by='api_year desc, last_modified_timestamp desc, pull_timestamp desc',
+            from_relation='base_ef3__course_transcripts',
+            additional_columns=['k_course', 'k_student_academic_record'],
+            row_number_column='__rn_final',
+            alias_suffix='final'
         )
     }}
 )

@@ -26,14 +26,14 @@ renamed as (
         {{ jget("v:arrivalTime::string") }}                        as arrival_time, --todo: look at format here
         {{ jget("v:departureTime::string") }}                      as departure_time, --todo: look at format here
         -- descriptors
-        {{ extract_descriptor('v:attendanceEventCategoryDescriptor::string') }} as attendance_event_category,
+        {{ extract_descriptor('v:attendanceEventCategoryDescriptor::string', string_size=200) }} as attendance_event_category,
         {{ extract_descriptor('v:educationalEnvironmentDescriptor::string') }}  as educational_environment,
         -- references
         {{ jget("v:sectionReference") }} as section_reference,
         {{ jget("v:studentReference") }} as student_reference,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
 
     from stu_section_att
 )

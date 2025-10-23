@@ -18,7 +18,7 @@ flattened as (
         {{ extract_descriptor('value:progressDescriptor::string') }} as yearly_progress,
 
         -- edfi extensions
-        value:_ext as v_ext
+        {{ jget('value:_ext') }} as v_ext
 
     from stage_stu_programs
         {{ json_flatten('v_english_language_proficiency_assessments') }}

@@ -29,13 +29,13 @@ renamed as (
         {{ jget('v:responsibilitySchoolReference') }} as responsibility_school_reference,
         {{ jget('v:studentReference') }}              as student_reference,
         -- lists
-        {{ jget('v:disciplines') }}                                   as v_disciplines,
-        {{ jget('v:studentDisciplineIncidentAssociations') }}         as v_student_discipline_incident_associations,
-        {{ jget('v:staffs') }}                                        as v_staffs,
-        {{ jget('v:studentDisciplineIncidentBehaviorAssociations') }} as v_student_discipline_incident_behavior_associations,
+        {{ jget('v:disciplines::string') }}                                   as v_disciplines,
+        {{ jget('v:studentDisciplineIncidentAssociations::string') }}         as v_student_discipline_incident_associations,
+        {{ jget('v:staffs::string') }}                                        as v_staffs,
+        {{ jget('v:studentDisciplineIncidentBehaviorAssociations::string') }} as v_student_discipline_incident_behavior_associations,
 
         -- edfi extensions
-        {{ jget('v:_ext') }} as v_ext
+        {{ jget('v:_ext::string') }} as v_ext
     from discipline_actions
 )
 select * from renamed

@@ -15,13 +15,13 @@ flattened as (
         program_enroll_begin_date,
         program_enroll_end_date,
         {{ extract_descriptor('value:cteProgramServiceDescriptor::string') }} as program_service,
-        value:primaryIndicator::boolean         as primary_indicator, 
-        value:serviceBeginDate::date            as service_begin_date,
-        value:serviceEndDate::date              as service_end_date,
-        value:cipCode::string                   as cip_code,
+        {{ jget('value:primaryIndicator::boolean') }}         as primary_indicator, 
+        {{ jget('value:serviceBeginDate::date') }}            as service_begin_date,
+        {{ jget('value:serviceEndDate::date') }}              as service_end_date,
+        {{ jget('value:cipCode::string') }}                   as cip_code,
 
         -- edfi extensions
-        value:_ext as v_ext
+        {{ jget('value:_ext::string') }} as v_ext
 
     from stage_stu_programs
         {{ json_flatten('v_cte_program_services') }}

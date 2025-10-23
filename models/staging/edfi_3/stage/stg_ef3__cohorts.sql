@@ -1,3 +1,7 @@
+{{ config(
+    materialized='table'
+) }}
+
 with base_cohorts as (
     select * from {{ ref('base_ef3__cohorts') }}
 ),
@@ -25,4 +29,6 @@ deduped as (
 )
 select * from deduped
 where is_deleted = 0
+{% if target.type != 'sqlserver' %}
 order by tenant_code, api_year desc, ed_org_id, cohort_id
+{% endif %}

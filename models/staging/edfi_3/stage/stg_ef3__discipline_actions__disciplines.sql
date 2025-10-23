@@ -12,7 +12,7 @@ flattened as (
         {{ extract_descriptor('value:disciplineDescriptor::string') }} as discipline_type,
 
         -- edfi extensions
-        value:_ext as v_ext
+        {{ jget('value:_ext::string') }} as v_ext
     from stg_discipline_actions
         {{ json_flatten('v_disciplines') }}
 ),

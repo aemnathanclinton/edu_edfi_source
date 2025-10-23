@@ -7,7 +7,7 @@ flattened as (
         api_year,
         k_bell_schedule,
         k_school,
-        value:date::date as calendar_date
+        {{ jget('value:date::date') }} as calendar_date
     from stg_bell_schedules
         {{ json_flatten('v_dates') }}
 )

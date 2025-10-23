@@ -23,7 +23,7 @@ Notes:
 {%- endmacro %}
 
 {% macro snowflake__json_object_agg(key_column, value_column) -%}
-    object_agg({{ key_column }}, {{ value_column }}::variant)
+    object_agg({{ key_column }}, {{ value_column }}::string)
 {%- endmacro %}
 
 {% macro databricks__json_object_agg(key_column, value_column) -%}

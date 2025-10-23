@@ -23,11 +23,11 @@ renamed as (
         -- references
         {{ jget("v:schoolReference") }} as school_reference,
         -- lists
-        {{ jget("v:academicWeeks") }} as v_academic_weeks,
-        {{ jget("v:gradingPeriods") }} as v_grading_periods,
+        {{ jget("v:academicWeeks::string") }} as v_academic_weeks,
+        {{ jget("v:gradingPeriods::string") }} as v_grading_periods,
 
         -- edfi extensions
-        {{ jget("v:_ext") }} as v_ext
+        {{ jget("v:_ext::string") }} as v_ext
     from sessions
 )
 select * from renamed
